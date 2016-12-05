@@ -33,9 +33,12 @@ AnnouncementsZimlet.prototype.init =
          var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
          var app = appCtxt.getApp(this.AnnounceTab);
          app.activate(true, this.AnnounceTab);
-         app.setContent('<div id="Announcements" style="padding:10px;">Test</div>');
+         app.setContent('<iframe id="Announcements" style="padding:10px;width:80%; height:100%; border:0px;overflow: scroll;z-index:400">');
+         console.log(app);
          var overview = app.getOverview(); // returns ZmOverview
          overview.setContent('<div id="Announcements-Left" style="padding:10px;">Announcements-Left</div>');
+         console.log(this.AnnounceTab);
+         overview._setAllowSelection();
         // var child = document.getElementById(overview._htmlElId);
         // child.parentNode.removeChild(child);
       
@@ -58,7 +61,7 @@ AnnouncementsZimlet.prototype.init =
    var params = {
    soapDoc: soapDoc,
    asyncMode: true,
-   callback: new AjxCallback(void 0, this._parseResponse)
+   callback: new AjxCallback(void 0, this.showContent)
    //,
    //errorCallback: new AjxCallback(void 0, ._handleError, [action, errorCallback])
    };
@@ -68,9 +71,16 @@ AnnouncementsZimlet.prototype.init =
 
 }
     
-AnnouncementsZimlet.prototype._parseResponse = function (args)
+AnnouncementsZimlet.prototype.showContent = function (content)
 {
-   console.log(args);
+   var announcements = content._data.AnnouncementsResponse.content._content.split('barryrecordsep');
+   var resultHTML = "";
+   announcements.forEach(function(announcement) {
+      announcement = announcement.split('barryseparator');
+      resultHTML = resultHTML + "<h2 style=\"color:red; margin-bottom:0px;\">"+announcement[3]+"</h2><small style=\"margin-top:-5px;\">"+announcement[0]+" "+announcement[1]+"</small>"+announcement[2]+
+      "<button onclick=\"AnnouncementsZimlet.prototype.status('urft')\">sss</button><hr>";
+   });
+   document.getElementById('Announcements').contentDocument.body.innerHTML = resultHTML;
 }
     
 AnnouncementsZimlet.prototype.status =

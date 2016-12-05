@@ -27,6 +27,12 @@ import com.zimbra.common.soap.SoapParseException;
 import com.zimbra.soap.DocumentHandler;
 import com.zimbra.soap.ZimbraSoapContext;
 
+import java.sql.*;
+import java.io.*;
+import java.text.*;
+import java.util.*;
+
+
 public class Announcements extends DocumentHandler {
 
     public Element handle(Element request, Map<String, Object> context)
@@ -39,9 +45,9 @@ public class Announcements extends DocumentHandler {
             Element response = zsc.createElement(
                     "AnnouncementsResponse"
             );
-            Element elStart = response.addUniqueElement("start");
-            Element elEnd = response.addUniqueElement("end");
-            elStart.setText(request.getAttribute("user"));
+            Element content = response.addUniqueElement("content");
+            //elStart.setText(request.getAttribute("user"));
+            content.setText(getAnnouncements());
             return response;
 
         } catch (
@@ -52,4 +58,49 @@ public class Announcements extends DocumentHandler {
         }
 
     }
+
+
+    private String getAnnouncements() {
+        try {
+            //read this from properties file...
+            String host = "127.0.0.1";
+            String port = "3306";
+            String dbase = "announcements_db";
+            String user = "ad-announcements_db";
+            String password = "sYnoigea_r";
+
+            String result = "";
+
+            DriverManager.setLogWriter(new
+
+                    PrintWriter(System.out));
+
+            Connection connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:7306/announcements_db?user=ad-announcements_db&password=" + password);
+
+            PreparedStatement queryApp = null;
+            ResultSet announcements = null;
+
+
+            if (!connection.isClosed())
+
+            {
+
+                queryApp = connection.prepareStatement("SELECT * FROM AnnouncementsEntry order by createDate DESC LIMIT 0, 100");
+
+                announcements = queryApp.executeQuery();
+
+                while (announcements.next()) {
+                    result = result + announcements.getDate("createDate") + "barryseparator" + announcements.getString("userName") + "barryseparator" + announcements.getString("content") + "barryseparator" + announcements.getString("title")+"barryrecordsep";
+                }
+                announcements.close();
+                connection.close();
+            }
+            return result;
+        } catch (Exception ex) {
+            return "Exception thrown: " + ex.toString();
+        }
+
+    }
+
 }
+
