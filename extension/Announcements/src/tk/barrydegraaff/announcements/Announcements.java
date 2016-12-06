@@ -46,10 +46,11 @@ public class Announcements extends DocumentHandler {
             Element response = zsc.createElement(
                     "AnnouncementsResponse"
             );
-            Element content = response.addUniqueElement("content");
-            //elStart.setText(request.getAttribute("user"));
-            content.setText(getAnnouncements(db_connect_string));
-            return response;
+            //Element content = response.addUniqueElement("content");
+            ////elStart.setText(request.getAttribute("user"));
+            //content.setText(getAnnouncements(db_connect_string, response));
+            //return response;
+            return getAnnouncements(db_connect_string, response);
 
         } catch (
                 Exception e)
@@ -73,7 +74,7 @@ public class Announcements extends DocumentHandler {
     }
 
 
-    private String getAnnouncements(String db_connect_string) {
+    private Element getAnnouncements(String db_connect_string, Element response) {
         try {
             String result = "";
             //DriverManager.setLogWriter(new PrintWriter(System.out));
@@ -82,18 +83,21 @@ public class Announcements extends DocumentHandler {
             ResultSet announcements = null;
             if (!connection.isClosed())
             {
-                queryApp = connection.prepareStatement("SELECT * FROM AnnouncementsEntry order by createDate DESC LIMIT 0, 100");
+                queryApp = connection.prepareStatement("SELECT * FROM AnnouncementsEntry order by createDate DESC LIMIT 0, 25");
                 announcements = queryApp.executeQuery();
 
                 while (announcements.next()) {
-                    result = result + announcements.getDate("createDate") + "barryseparator" + announcements.getString("userName") + "barryseparator" + announcements.getString("content") + "barryseparator" + announcements.getString("title") + "barryrecordsep";
+                    Element content = response.addNonUniqueElement("content");
+                    content.setText(announcements.getTimestamp("createDate") + "barryseparator" + announcements.getString("userName") + "barryseparator" + announcements.getString("content") + "barryseparator" + announcements.getString("title"));
                 }
                 announcements.close();
                 connection.close();
             }
-            return result;
+            return response;
         } catch (Exception ex) {
-            return "Exception thrown: " + ex.toString();
+            Element content = response.addNonUniqueElement("content");
+            content.setText("Exception thrown: " + ex.toString());
+            return response;
         }
     }
 }

@@ -75,12 +75,12 @@ AnnouncementsZimlet.prototype.init =
     
 AnnouncementsZimlet.prototype.showContent = function (content)
 {
-   var announcements = content._data.AnnouncementsResponse.content._content.split('barryrecordsep');
-   var resultHTML = "";
+   var announcements = content._data.AnnouncementsResponse.content;
+   var resultHTML = "";var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
    announcements.forEach(function(announcement) {
-      announcement = announcement.split('barryseparator');
+      announcement = announcement._content.split('barryseparator');
       resultHTML = resultHTML + "<h2 style=\"color:red; margin-bottom:0px;\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement[3])+"</h2><small style=\"margin-top:-5px;\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement[0])+" "+AnnouncementsZimlet.prototype.escapeHtml(announcement[1])+"</small>"+AnnouncementsZimlet.prototype.escapeHtml(announcement[2])+
-      "<button onclick=\"AnnouncementsZimlet.prototype.status('urft')\">Add comment</button><hr style=\"border:none; height:1px; color:red; background-color:red;\">";
+      "<br><table><tr><td><div style=\"width:37px; height:19px; color: white; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; background-image:url('"+zimletInstance.getResource('comment.png')+"')\">0</div></td><td>&nbsp;&nbsp;<button style=\"height:20px; \" onclick=\"AnnouncementsZimlet.prototype.status('urft')\">Add comment</button></td></tr></table><hr style=\"border:none; height:1px; color:red; background-color:red;\">";
    });
    document.getElementById('Announcements').innerHTML = resultHTML;
 }
