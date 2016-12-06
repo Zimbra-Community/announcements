@@ -24,8 +24,8 @@
       <file leaf-file-name="Announcements.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="77" column="85" selection-start-line="77" selection-start-column="84" selection-end-line="77" selection-end-column="85" />
+            <state relative-caret-position="459">
+              <caret line="95" column="55" selection-start-line="95" selection-start-column="55" selection-end-line="95" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -38,7 +38,12 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
               <caret line="49" column="69" selection-start-line="49" selection-start-column="50" selection-end-line="49" selection-end-column="69" />
-              <folding />
+              <folding>
+                <element signature="e#0#1598#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#1420#1421#0" expanded="false" />
+                <element signature="e#1461#1462#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,7 +53,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
               <caret line="31" column="59" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="59" />
-              <folding />
+              <folding>
+                <element signature="e#0#1195#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -69,8 +77,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1920" />
-    <option name="height" value="1048" />
+    <option name="x" value="-6" />
+    <option name="width" value="1932" />
+    <option name="height" value="1054" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -97,7 +106,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -248,15 +256,16 @@
       </pane>
       <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/META-INF" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Remote.myzimbra.com">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -343,6 +352,21 @@
       <listeners />
       <method />
     </configuration>
+    <configuration default="false" name="myzimbra.com" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="myzimbra.com" />
+      <option name="PORT" value="5005" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="5005" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Remote.myzimbra.com" />
+    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -358,8 +382,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1048" extended-state="2" />
-    <editor active="true" />
+    <frame x="-6" y="0" width="1932" height="1054" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -373,11 +397,11 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18272251" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18229167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39978904" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -425,7 +449,22 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java</url>
+          <line>67</line>
+          <properties />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java</url>
+          <line>36</line>
+          <properties field="db_connect_string" class="tk.barrydegraaff.announcements.Announcements" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -447,7 +486,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="49" column="69" selection-start-line="49" selection-start-column="50" selection-end-line="49" selection-end-column="69" />
-          <folding />
+          <folding>
+            <element signature="e#0#1598#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1420#1421#0" expanded="false" />
+            <element signature="e#1461#1462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -455,7 +499,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="31" column="59" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="59" />
-          <folding />
+          <folding>
+            <element signature="e#0#1195#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/AnnouncementsExt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="49" column="69" selection-start-line="49" selection-start-column="50" selection-end-line="49" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#1598#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1420#1421#0" expanded="false" />
+            <element signature="e#1461#1462#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/AnnoucementsService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="31" column="59" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#1195#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -464,7 +545,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="31" column="59" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="59" />
-          <folding />
+          <folding>
+            <element signature="e#0#1195#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -472,14 +556,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="49" column="69" selection-start-line="49" selection-start-column="50" selection-end-line="49" selection-end-column="69" />
-          <folding />
+          <folding>
+            <element signature="e#0#1598#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1420#1421#0" expanded="false" />
+            <element signature="e#1461#1462#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="77" column="85" selection-start-line="77" selection-start-column="84" selection-end-line="77" selection-end-column="85" />
+        <state relative-caret-position="459">
+          <caret line="95" column="55" selection-start-line="95" selection-start-column="55" selection-end-line="95" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -545,6 +634,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

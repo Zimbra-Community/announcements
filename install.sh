@@ -25,9 +25,13 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
+mkdir -p /opt/zimbra/lib/ext/Announcements
+wget --no-cache https://github.com/Zimbra-Community/annoucements/raw/master/extension/Announcements/out/artifacts/Announcements_jar/Announcements.jar -O /opt/zimbra/lib/ext/Announcements/Announcements.jar
+
 ANNOUNCEMENTS_PWD=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-10};echo;)
 
-echo "db_password=$ANNOUNCEMENTS_PWD" > /opt/zimbra/lib/ext/Announcements/db.properties
+#here one could optionally support mysql by using jdbc:mysql://, ssl is disabled as this is a local connection
+echo "db_connect_string=jdbc:mariadb://127.0.0.1:7306/announcements_db?user=ad-announcements_db&password=$ANNOUNCEMENTS_PWD" > /opt/zimbra/lib/ext/Announcements/db.properties
 
 # creating a user, just to make sure we have one (for mysql on CentOS 6, so we can execute the next mysql queries w/o errors)
 ANNOUNCEMENTS_DBCREATE="$(mktemp /tmp/announcements-dbcreate.XXXXXXXX.sql)"
@@ -62,3 +66,7 @@ fi
 
 echo "Populating announcements_db please wait..."
 /opt/zimbra/bin/mysql announcements_db < /root/AnnouncementsEntry.sql
+
+echo "--------------------------------------------------------------------------------------------------------------"
+echo "You still need to restart some services to load the changes:"
+echo "su - zimbra -c \"zmmailboxdctl restart\""

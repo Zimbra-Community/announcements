@@ -21,7 +21,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/.
         target="main compose-window view-window"
         label="Announcements"
         description="Show announcements to users">
-    <include>tk_barrydegraaff_announcements.js</include>    
+    <include>tk_barrydegraaff_announcements.js</include> 
+    <include>purify.js</include> 
     <includeCSS>tk_barrydegraaff_announcements.css</includeCSS>
    <handlerObject>tk_barrydegraaff_announcements_HandlerObject</handlerObject>
 </zimlet>
