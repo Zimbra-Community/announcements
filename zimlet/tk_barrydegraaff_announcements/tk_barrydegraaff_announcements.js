@@ -133,7 +133,7 @@ AnnouncementsZimlet.prototype.addAnnouceOrComment = function(isComment) {
   addAnnouceOrComment.addEnterListener(new AjxListener(this, this._renameFileCallback, [input, addAnnouceOrComment]));
   //add tab group and focus on the input field
   addAnnouceOrComment._tabGroup.addMemberBefore(addAnnouceOrComment.dwtext,addAnnouceOrComment._tabGroup.getFirstMember());
-  addAnnouceOrComment._tabGroup.addMemberBefore(input, AnnouncementsZimlet.dwtext);
+  addAnnouceOrComment._tabGroup.addMemberBefore(input, addAnnouceOrComment.dwtext);
   addAnnouceOrComment._tabGroup.setFocusMember(input);  
   addAnnouceOrComment.popup();
   document.getElementById('announceFile').innerHTML = '<b>Attachments</b><br><input type="file" multiple name="attachments" id="announceAttach">';
