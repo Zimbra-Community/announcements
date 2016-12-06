@@ -38,7 +38,7 @@ AnnouncementsZimlet.prototype.init =
          overview.setContent('<div id="Announcements-Left" style="padding:10px;"><img style="width:80%; height:auto" src="'+zimletInstance.getResource('logo.svg')+'"><h2 style="color:red">Links</h2>&bull; <a style="color:red; font-size:14px;" href="https://hivos.myscienta.com" target="_blank">Scienta</a><br></div>');
          overview._setAllowSelection();      
          var toolbar = app.getToolbar(); // returns ZmToolBar
-         toolbar.createButton("AddAnnouncement", {text: "Add Accouncement"});
+         toolbar.createButton("AddAnnouncement", {text: "Add Announcement"});
          toolbar.addSelectionListener("AddAnnouncement", new AjxListener(this, this.addAnnouceOrComment));         
          app.launch();    
       }
@@ -116,10 +116,10 @@ AnnouncementsZimlet.prototype.addAnnouceOrComment = function(isComment) {
     id: 'announceTitle'
   });
 
-  AnnouncementsZimlet.dwtext = new ZmHtmlEditor({parent: composite});
-  AnnouncementsZimlet.dwtext.setMode("text/html");
-  AnnouncementsZimlet.dwtext.setSize(600,400); 
-  AnnouncementsZimlet.dwtext.setContent("");
+  addAnnouceOrComment.dwtext = new ZmHtmlEditor({parent: composite});
+  addAnnouceOrComment.dwtext.setMode("text/html");
+  addAnnouceOrComment.dwtext.setSize(600,400); 
+  addAnnouceOrComment.dwtext.setContent("");
 
   var files = new DwtInputField({
     parent: composite,
@@ -129,14 +129,22 @@ AnnouncementsZimlet.prototype.addAnnouceOrComment = function(isComment) {
 
   composite.setSize(610,500); 
   addAnnouceOrComment.setTitle('New Announcement');
-  addAnnouceOrComment.setButtonListener(DwtDialog.OK_BUTTON, new AjxListener(this, this._renameFileCallback, [input, addAnnouceOrComment]));
+  addAnnouceOrComment.setButtonListener(DwtDialog.OK_BUTTON, new AjxListener(this, this.addAnnouceOrCommentCallback, [input, addAnnouceOrComment]));
   addAnnouceOrComment.addEnterListener(new AjxListener(this, this._renameFileCallback, [input, addAnnouceOrComment]));
   //add tab group and focus on the input field
-  addAnnouceOrComment._tabGroup.addMemberBefore(AnnouncementsZimlet.dwtext,addAnnouceOrComment._tabGroup.getFirstMember());
+  addAnnouceOrComment._tabGroup.addMemberBefore(addAnnouceOrComment.dwtext,addAnnouceOrComment._tabGroup.getFirstMember());
   addAnnouceOrComment._tabGroup.addMemberBefore(input, AnnouncementsZimlet.dwtext);
   addAnnouceOrComment._tabGroup.setFocusMember(input);  
   addAnnouceOrComment.popup();
-
-document.getElementById('announceFile').innerHTML = '<b>Attachments</b><br><input type="file" name="attachments" id="announceAttach">';
-
+  document.getElementById('announceFile').innerHTML = '<b>Attachments</b><br><input type="file" multiple name="attachments" id="announceAttach">';
 };
+
+AnnouncementsZimlet.prototype.addAnnouceOrCommentCallback = function (input, addAnnouceOrComment)
+{
+   console.log(input.getValue());
+   console.log(addAnnouceOrComment.dwtext.getContent());
+   try {
+      addAnnouceOrComment.setContent('');
+      addAnnouceOrComment.popdown();
+   } catch(err){}
+}
