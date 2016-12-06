@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-language" content="en" />
+    <title>Hivos.org news</title>
+    <link href="css/FeedEk.css" rel="stylesheet" type="text/css" />
+    <script src="jquery.min.js"></script>
+    <script type="text/javascript" src="moment-with-langs.min.js"></script>
+    <script type="text/javascript" src="js/FeedEk.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#divRss').FeedEk({
+                FeedUrl: 'https://www.hivos.org/news.xml',
+                MaxCount: 8,
+                DescCharacterLimit: 100
+            });
+            $('#divRss2').FeedEk({
+                FeedUrl: 'https://www.hivos.org/vacancies/all/rss.xml',
+                MaxCount: 8,
+                DescCharacterLimit: 100
+            });
+        });
+
+    </script>
+    <style>
+        body{font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 13px;line-height: 17px !important;}
+        .rssDiv{float: left;padding-right: 35px;}
+        ul{width: 300px !important;}
+    </style>
+</head>
+<body>
+  <div style="padding:10px;">
+    <h2 style="color:red">Hivos.org news</h2>
+            <div id="divRss"></div>
+
+    <h2 style="color:red">Vacanies</h2>
+            <div id="divRss2"></div>
+</body>
+
+</html>

@@ -30,13 +30,15 @@ AnnouncementsZimlet.prototype.init =
       if(!this.AnnounceTab)
       {
          this.AnnounceTab = this.createApp("Announcements", "", "Announcements",0);
+         var appHeight = (Math.max( document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight )-110 );
+         
          var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
          var app = appCtxt.getApp(this.AnnounceTab);
          app.activate(true, this.AnnounceTab);
-         app.setContent('<iframe id="Announcements" style="padding:10px;width:80%; height:100%; border:0px;overflow: scroll;z-index:400">');
+         app.setContent('<table><tr><td><div id="Announcements" style="padding:10px;width:800px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400"></div></td><td><iframe style="padding:10px;width:400px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400" src="'+zimletInstance.getResource('/rss/index.html')+'"></td></tr></table>');
          console.log(app);
          var overview = app.getOverview(); // returns ZmOverview
-         overview.setContent('<div id="Announcements-Left" style="padding:10px;">Announcements-Left</div>');
+         overview.setContent('<div id="Announcements-Left" style="padding:10px;"><img style="width:80%; height:auto" src="'+zimletInstance.getResource('logo.svg')+'"><h2 style="color:red">Links</h2>&bull; <a style="color:red; font-size:14px;" href="https://hivos.myscienta.com" target="_blank">Scienta</a><br></div>');
          console.log(this.AnnounceTab);
          overview._setAllowSelection();
         // var child = document.getElementById(overview._htmlElId);
@@ -77,10 +79,10 @@ AnnouncementsZimlet.prototype.showContent = function (content)
    var resultHTML = "";
    announcements.forEach(function(announcement) {
       announcement = announcement.split('barryseparator');
-      resultHTML = resultHTML + "<h2 style=\"color:red; margin-bottom:0px;\">"+announcement[3]+"</h2><small style=\"margin-top:-5px;\">"+announcement[0]+" "+announcement[1]+"</small>"+announcement[2]+
-      "<button onclick=\"AnnouncementsZimlet.prototype.status('urft')\">sss</button><hr>";
+      resultHTML = resultHTML + "<h2 style=\"color:red; margin-bottom:0px;\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement[3])+"</h2><small style=\"margin-top:-5px;\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement[0])+" "+AnnouncementsZimlet.prototype.escapeHtml(announcement[1])+"</small>"+AnnouncementsZimlet.prototype.escapeHtml(announcement[2])+
+      "<button onclick=\"AnnouncementsZimlet.prototype.status('urft')\">Add comment</button><hr style=\"border:none; height:1px; color:red; background-color:red;\">";
    });
-   document.getElementById('Announcements').contentDocument.body.innerHTML = resultHTML;
+   document.getElementById('Announcements').innerHTML = resultHTML;
 }
     
 AnnouncementsZimlet.prototype.status =
@@ -105,4 +107,12 @@ AnnouncementsZimlet.prototype.onSelectApp = function (appName) {
 AnnouncementsZimlet.prototype.appActive =
   function(appName, active) {
 
+};
+
+AnnouncementsZimlet.prototype.escapeHtml =
+function (unsafe) {
+    if(unsafe)
+    {
+       return DOMPurify.sanitize(unsafe);
+    }   
 };
