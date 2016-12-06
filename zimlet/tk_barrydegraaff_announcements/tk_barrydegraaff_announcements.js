@@ -24,8 +24,6 @@ var AnnouncementsZimlet = tk_barrydegraaff_announcements_HandlerObject;
 
 AnnouncementsZimlet.prototype.init =
   function () {
-    // Initialize the zimlet
-
    try {
       if(!this.AnnounceTab)
       {
@@ -36,16 +34,10 @@ AnnouncementsZimlet.prototype.init =
          var app = appCtxt.getApp(this.AnnounceTab);
          app.activate(true, this.AnnounceTab);
          app.setContent('<table><tr><td><div id="Announcements" style="padding:10px;width:800px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400"></div></td><td><iframe style="padding:10px;width:400px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400" src="'+zimletInstance.getResource('/rss/index.html')+'"></td></tr></table>');
-         console.log(app);
          var overview = app.getOverview(); // returns ZmOverview
          overview.setContent('<div id="Announcements-Left" style="padding:10px;"><img style="width:80%; height:auto" src="'+zimletInstance.getResource('logo.svg')+'"><h2 style="color:red">Links</h2>&bull; <a style="color:red; font-size:14px;" href="https://hivos.myscienta.com" target="_blank">Scienta</a><br></div>');
-         console.log(this.AnnounceTab);
-         overview._setAllowSelection();
-        // var child = document.getElementById(overview._htmlElId);
-        // child.parentNode.removeChild(child);
-      
+         overview._setAllowSelection();      
          var toolbar = app.getToolbar(); // returns ZmToolBar
-         //toolbar.dispose();
          toolbar.createButton("AddAnnouncement", {text: "Add Accouncement"});
          toolbar.addSelectionListener("AddAnnouncement", new AjxListener(this, this.AddAnnouncement));         
          app.launch();    
@@ -58,19 +50,13 @@ AnnouncementsZimlet.prototype.init =
    } catch (err) { console.log (err)} 
 
    var soapDoc = AjxSoapDoc.create("Announcements", "urn:Announcements", null);
-   soapDoc.getMethod().setAttribute("type", "all");
-   soapDoc.getMethod().setAttribute("user", "test@domain.com");
+   soapDoc.getMethod().setAttribute("action", "getAnnouncements");
    var params = {
    soapDoc: soapDoc,
    asyncMode: true,
    callback: new AjxCallback(void 0, this.showContent)
-   //,
-   //errorCallback: new AjxCallback(void 0, ._handleError, [action, errorCallback])
    };
-   
    appCtxt.getAppController().sendRequest(params);
-
-
 }
     
 AnnouncementsZimlet.prototype.showContent = function (content)
@@ -78,11 +64,11 @@ AnnouncementsZimlet.prototype.showContent = function (content)
    var announcements = content._data.AnnouncementsResponse.content;
    var resultHTML = "";var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
    announcements.forEach(function(announcement) {
-      announcement = announcement._content.split('barryseparator');
-      resultHTML = resultHTML + "<h2 style=\"color:red; margin-bottom:0px;\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement[3])+"</h2><small style=\"margin-top:-5px;\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement[0])+" "+AnnouncementsZimlet.prototype.escapeHtml(announcement[1])+"</small>"+AnnouncementsZimlet.prototype.escapeHtml(announcement[2])+
+      resultHTML = resultHTML + "<h2 style=\"color:red; margin-bottom:0px;\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.title)+"</h2><small style=\"margin-top:-5px;\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.createDate)+" "+AnnouncementsZimlet.prototype.escapeHtml(announcement.userName)+"</small>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.content)+
       "<br><table><tr><td><div style=\"width:37px; height:19px; color: white; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; background-image:url('"+zimletInstance.getResource('comment.png')+"')\">0</div></td><td>&nbsp;&nbsp;<button style=\"height:20px; \" onclick=\"AnnouncementsZimlet.prototype.status('urft')\">Add comment</button></td></tr></table><hr style=\"border:none; height:1px; color:red; background-color:red;\">";
    });
    document.getElementById('Announcements').innerHTML = resultHTML;
+
 }
     
 AnnouncementsZimlet.prototype.status =

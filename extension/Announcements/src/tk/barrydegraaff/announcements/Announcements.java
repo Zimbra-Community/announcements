@@ -39,22 +39,19 @@ public class Announcements extends DocumentHandler {
     public Element handle(Element request, Map<String, Object> context)
             throws ServiceException {
         try {
-            // Create response
-
             ZimbraSoapContext zsc = getZimbraSoapContext(context);
-
             Element response = zsc.createElement(
                     "AnnouncementsResponse"
             );
-            //Element content = response.addUniqueElement("content");
-            ////elStart.setText(request.getAttribute("user"));
-            //content.setText(getAnnouncements(db_connect_string, response));
-            //return response;
-            return getAnnouncements(db_connect_string, response);
 
+            switch (request.getAttribute("action")) {
+                case "getAnnouncements":
+                    return getAnnouncements(db_connect_string, response);
+                default:
+                    return getAnnouncements(db_connect_string, response);
+            }
         } catch (
                 Exception e)
-
         {
             throw ServiceException.FAILURE("exception occurred handling command", e);
         }
@@ -81,14 +78,16 @@ public class Announcements extends DocumentHandler {
             Connection connection = DriverManager.getConnection(db_connect_string);
             PreparedStatement queryApp = null;
             ResultSet announcements = null;
-            if (!connection.isClosed())
-            {
+            if (!connection.isClosed()) {
                 queryApp = connection.prepareStatement("SELECT * FROM AnnouncementsEntry order by createDate DESC LIMIT 0, 25");
                 announcements = queryApp.executeQuery();
 
                 while (announcements.next()) {
                     Element content = response.addNonUniqueElement("content");
-                    content.setText(announcements.getTimestamp("createDate") + "barryseparator" + announcements.getString("userName") + "barryseparator" + announcements.getString("content") + "barryseparator" + announcements.getString("title"));
+                    content.addAttribute("createDate", announcements.getTimestamp("createDate").toString());
+                    content.addAttribute("userName", announcements.getString("userName"));
+                    content.addAttribute("content", announcements.getString("content"));
+                    content.addAttribute("title", announcements.getString("title"));
                 }
                 announcements.close();
                 connection.close();
