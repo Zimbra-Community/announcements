@@ -39,7 +39,7 @@ AnnouncementsZimlet.prototype.init =
          overview._setAllowSelection();      
          var toolbar = app.getToolbar(); // returns ZmToolBar
          toolbar.createButton("AddAnnouncement", {text: "Add Accouncement"});
-         toolbar.addSelectionListener("AddAnnouncement", new AjxListener(this, this.AddAnnouncement));         
+         toolbar.addSelectionListener("AddAnnouncement", new AjxListener(this, this.addAnnouceOrComment));         
          app.launch();    
       }
       else
@@ -101,4 +101,42 @@ function (unsafe) {
     {
        return DOMPurify.sanitize(unsafe);
     }   
+};
+
+AnnouncementsZimlet.prototype.addAnnouceOrComment = function(isComment) {
+   var addAnnouceOrComment = new DwtDialog({parent: appCtxt.getShell(), disposeOnPopDown: true});
+   var composite = new DwtComposite({ parent: addAnnouceOrComment });
+
+  addAnnouceOrComment.setView(composite);
+
+  var input = new DwtInputField({
+    parent: composite,
+    className: 'announceTxt',
+    hint: 'Announcement Title',
+    id: 'announceTitle'
+  });
+
+  AnnouncementsZimlet.dwtext = new ZmHtmlEditor({parent: composite});
+  AnnouncementsZimlet.dwtext.setMode("text/html");
+  AnnouncementsZimlet.dwtext.setSize(600,400); 
+  AnnouncementsZimlet.dwtext.setContent("");
+
+  var files = new DwtInputField({
+    parent: composite,
+    className: 'announceTxt',
+    id: 'announceFile'
+  });
+
+  composite.setSize(610,500); 
+  addAnnouceOrComment.setTitle('New Announcement');
+  addAnnouceOrComment.setButtonListener(DwtDialog.OK_BUTTON, new AjxListener(this, this._renameFileCallback, [input, addAnnouceOrComment]));
+  addAnnouceOrComment.addEnterListener(new AjxListener(this, this._renameFileCallback, [input, addAnnouceOrComment]));
+  //add tab group and focus on the input field
+  addAnnouceOrComment._tabGroup.addMemberBefore(AnnouncementsZimlet.dwtext,addAnnouceOrComment._tabGroup.getFirstMember());
+  addAnnouceOrComment._tabGroup.addMemberBefore(input, AnnouncementsZimlet.dwtext);
+  addAnnouceOrComment._tabGroup.setFocusMember(input);  
+  addAnnouceOrComment.popup();
+
+document.getElementById('announceFile').innerHTML = '<b>Attachments</b><br><input type="file" name="attachments" id="announceAttach">';
+
 };
