@@ -141,7 +141,7 @@ AnnouncementsZimlet.prototype.addAnnouceOrComment = function(isComment) {
   addAnnouceOrComment._tabGroup.addMemberBefore(title, addAnnouceOrComment.dwtext);
   addAnnouceOrComment._tabGroup.setFocusMember(title);  
   addAnnouceOrComment.popup();
-  document.getElementById('announceFile').innerHTML = '<b>Attachments</b><br><title type="file" multiple name="attachments" id="announceAttach">';
+  document.getElementById('announceFile').innerHTML = '<b>Attachments</b><br><input type="file" multiple name="attachments" id="announceAttach">';
 };
 
 AnnouncementsZimlet.prototype.addAnnouceOrCommentCallback = function (title, addAnnouceOrComment)
