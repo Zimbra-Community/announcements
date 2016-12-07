@@ -114,7 +114,7 @@ AnnouncementsZimlet.prototype.addAnnouceOrComment = function(isComment) {
 
   addAnnouceOrComment.setView(composite);
 
-  var input = new DwtInputField({
+  var title = new DwtInputField({
     parent: composite,
     className: 'announceTxt',
     hint: 'Announcement Title',
@@ -134,20 +134,40 @@ AnnouncementsZimlet.prototype.addAnnouceOrComment = function(isComment) {
 
   composite.setSize(610,500); 
   addAnnouceOrComment.setTitle('New Announcement');
-  addAnnouceOrComment.setButtonListener(DwtDialog.OK_BUTTON, new AjxListener(this, this.addAnnouceOrCommentCallback, [input, addAnnouceOrComment]));
-  addAnnouceOrComment.addEnterListener(new AjxListener(this, this.addAnnouceOrCommentCallback, [input, addAnnouceOrComment]));
-  //add tab group and focus on the input field
+  addAnnouceOrComment.setButtonListener(DwtDialog.OK_BUTTON, new AjxListener(this, this.addAnnouceOrCommentCallback, [title, addAnnouceOrComment]));
+  addAnnouceOrComment.addEnterListener(new AjxListener(this, this.addAnnouceOrCommentCallback, [title, addAnnouceOrComment]));
+  //add tab group and focus on the title field
   addAnnouceOrComment._tabGroup.addMemberBefore(addAnnouceOrComment.dwtext,addAnnouceOrComment._tabGroup.getFirstMember());
-  addAnnouceOrComment._tabGroup.addMemberBefore(input, addAnnouceOrComment.dwtext);
-  addAnnouceOrComment._tabGroup.setFocusMember(input);  
+  addAnnouceOrComment._tabGroup.addMemberBefore(title, addAnnouceOrComment.dwtext);
+  addAnnouceOrComment._tabGroup.setFocusMember(title);  
   addAnnouceOrComment.popup();
-  document.getElementById('announceFile').innerHTML = '<b>Attachments</b><br><input type="file" multiple name="attachments" id="announceAttach">';
+  document.getElementById('announceFile').innerHTML = '<b>Attachments</b><br><title type="file" multiple name="attachments" id="announceAttach">';
 };
 
-AnnouncementsZimlet.prototype.addAnnouceOrCommentCallback = function (input, addAnnouceOrComment)
+AnnouncementsZimlet.prototype.addAnnouceOrCommentCallback = function (title, addAnnouceOrComment)
 {
-   console.log(input.getValue());
-   console.log(addAnnouceOrComment.dwtext.getContent());
+   var title = title.getValue();
+   var body = addAnnouceOrComment.dwtext.getContent();
+   body = body.replace(/(\<html\>|\<\/html\>|\<body\>|\<\/body\>)/ig,'');
+   
+   if((title.length < 3)|(body.length < 10))
+   {
+      AnnouncementsZimlet.prototype.status('Please add title and announcement body.',ZmStatusView.LEVEL_WARNING)
+      return;
+   }
+
+   var soapDoc = AjxSoapDoc.create("Announcements", "urn:Announcements", null);
+   soapDoc.getMethod().setAttribute("action", "publishAnnouncements");
+   soapDoc.getMethod().setAttribute("title", encodeURIComponent(title));
+   soapDoc.getMethod().setAttribute("body", encodeURIComponent(body));
+   var params = {
+   soapDoc: soapDoc,
+   asyncMode: true,
+   callback: new AjxCallback(void 0, this.showContent)
+   };
+   //String result = java.net.URLDecoder.decode(url, "UTF-8");
+   appCtxt.getAppController().sendRequest(params);
+
    try {
       addAnnouceOrComment.setContent('');
       addAnnouceOrComment.popdown();

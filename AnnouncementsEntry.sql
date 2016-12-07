@@ -24,3 +24,39 @@ CREATE TABLE IF NOT EXISTS `AnnouncementsEntry` (
 
 ALTER TABLE `AnnouncementsEntry`
  ADD PRIMARY KEY (`entryId`), ADD KEY `IX_A6EF0B81` (`classNameId`,`classPK`), ADD KEY `IX_14F06A6B` (`classNameId`,`classPK`,`alert`), ADD KEY `IX_D49C2E66` (`userId`), ADD KEY `IX_1AFBDE08` (`uuid_`), ADD KEY `IX_F2949120` (`uuid_`,`companyId`);
+
+
+ALTER TABLE `AnnouncementsEntry` DROP INDEX  `IX_A6EF0B81`;
+ALTER TABLE `AnnouncementsEntry` DROP INDEX  `IX_14F06A6B`;
+ALTER TABLE `AnnouncementsEntry` DROP INDEX  `IX_D49C2E66`;
+ALTER TABLE `AnnouncementsEntry` DROP INDEX  `IX_1AFBDE08`;
+ALTER TABLE `AnnouncementsEntry` DROP INDEX  `IX_F2949120`;
+ALTER TABLE `AnnouncementsEntry` MODIFY `entryId` bigint(20) AUTO_INCREMENT;
+
+
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `uuid_`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `companyId`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `userId`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `modifiedDate`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `classNameId`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `classPK`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `url`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `type_`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `displayDate`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `expirationDate`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `priority`;
+ALTER TABLE `AnnouncementsEntry` DROP COLUMN `alert`;
+
+/*
+MariaDB [announcements_db]> describe `AnnouncementsEntry`;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| entryId    | bigint(20)  | NO   | PRI | NULL    | auto_increment |
+| userName   | varchar(75) | YES  |     | NULL    |                |
+| createDate | datetime    | YES  |     | NULL    |                |
+| title      | varchar(75) | YES  |     | NULL    |                |
+| content    | longtext    | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+   
+*/
