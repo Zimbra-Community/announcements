@@ -47,8 +47,8 @@ public class Announcements extends DocumentHandler {
             switch (request.getAttribute("action")) {
                 case "getAnnouncements":
                     return getAnnouncements(db_connect_string, response);
-                case "publishAnnouncements":
-                    return publishAnnouncements(db_connect_string, request, response);
+                case "publishAnnouncementOrComment":
+                    return publishAnnouncementOrComment(db_connect_string, request, response);
                 default:
                     return getAnnouncements(db_connect_string, response);
             }
@@ -81,7 +81,9 @@ public class Announcements extends DocumentHandler {
             PreparedStatement queryApp = null;
             ResultSet announcements = null;
             if (!connection.isClosed()) {
-                queryApp = connection.prepareStatement("SELECT * FROM AnnouncementsEntry order by createDate DESC LIMIT 0, 25");
+                queryApp = connection.prepareStatement("SELECT AnnouncementsEntry.entryId, AnnouncementsEntry.userName, AnnouncementsEntry.createDate, AnnouncementsEntry.title, AnnouncementsEntry.content, " +
+                        " (select count(*) from AnnouncementsComments WHERE AnnouncementsEntry.entryId = AnnouncementsComments.entryId) as comments "+
+                        "FROM AnnouncementsEntry order by createDate DESC LIMIT 0, 25");
                 announcements = queryApp.executeQuery();
 
                 while (announcements.next()) {
@@ -90,6 +92,8 @@ public class Announcements extends DocumentHandler {
                     content.addAttribute("userName", announcements.getString("userName"));
                     content.addAttribute("content", announcements.getString("content"));
                     content.addAttribute("title", announcements.getString("title"));
+                    content.addAttribute("comments", announcements.getString("comments"));
+                    content.addAttribute("entryId", announcements.getString("entryId"));
                 }
                 announcements.close();
                 connection.close();
@@ -102,26 +106,58 @@ public class Announcements extends DocumentHandler {
         }
     }
 
-    private Element publishAnnouncements(String db_connect_string, Element request, Element response) {
+    private Element publishAnnouncementOrComment(String db_connect_string, Element request, Element response) {
         try {
             String result = "";
-            //DriverManager.setLogWriter(new PrintWriter(System.out));
             Connection connection = DriverManager.getConnection(db_connect_string);
             PreparedStatement queryApp = null;
-            ResultSet announcements = null;
 
             if (!connection.isClosed()) {
-                queryApp = connection.prepareStatement("INSERT INTO AnnouncementsEntry VALUES (NULL, "+request.getAttribute("userName")+", NOW(),"+request.getAttribute("title")+","+request.getAttribute("content")+")");
-                announcements = queryApp.executeQuery();
-                announcements.close();
+                if(this.isNumeric(request.getAttribute("entryId")))
+                {
+                    PreparedStatement stmt = connection.prepareStatement("INSERT INTO AnnouncementsComments VALUES (NULL, ?, ?, NOW(),?)");
+                    stmt.setString(1, this.uriDecode(request.getAttribute("entryId")));
+                    stmt.setString(2, this.uriDecode(request.getAttribute("userName")));
+                    stmt.setString(3, this.uriDecode(request.getAttribute("content")));
+                    stmt.executeQuery();
+                }
+                else {
+                    PreparedStatement stmt = connection.prepareStatement("INSERT INTO AnnouncementsEntry VALUES (NULL, ?, NOW(),?,?)");
+                    stmt.setString(1, this.uriDecode(request.getAttribute("userName")));
+                    stmt.setString(2, this.uriDecode(request.getAttribute("title")));
+                    stmt.setString(3, this.uriDecode(request.getAttribute("content")));
+                    stmt.executeQuery();
+                }
                 connection.close();
             }
-            return response;
+            return getAnnouncements(db_connect_string, response);
         } catch (Exception ex) {
             Element content = response.addNonUniqueElement("content");
             content.setText("Exception thrown: " + ex.toString());
             return response;
         }
+    }
+
+    private String uriDecode(String dirty) {
+        try {
+            String clean = java.net.URLDecoder.decode(dirty, "UTF-8");
+            return clean;
+        } catch(Exception ex) {
+        return ex.toString();
+        }
+    }
+
+    private boolean isNumeric(String str)
+    {
+        try
+        {
+            double d = Double.parseDouble(str);
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -60,3 +60,29 @@ MariaDB [announcements_db]> describe `AnnouncementsEntry`;
 +------------+-------------+------+-----+---------+----------------+
    
 */
+
+CREATE TABLE IF NOT EXISTS `AnnouncementsComments` (
+  `id` bigint(20) NOT NULL,
+  `entryId` bigint(20) NOT NULL,
+  `userName` varchar(75) DEFAULT NULL,
+  `createDate` datetime DEFAULT NULL,
+  `content` longtext
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `AnnouncementsComments` ADD PRIMARY KEY (`id`);
+ALTER TABLE `AnnouncementsComments` MODIFY `id` bigint(20) AUTO_INCREMENT;
+ALTER TABLE `AnnouncementsComments` ADD INDEX `entryId` (`entryId`);
+
+/*
+describe `AnnouncementsComments`;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| id         | bigint(20)  | NO   | PRI | NULL    | auto_increment |
+| entryId    | bigint(20)  | NO   | MUL | NULL    |                |
+| userName   | varchar(75) | YES  |     | NULL    |                |
+| createDate | datetime    | YES  |     | NULL    |                |
+| content    | longtext    | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+*/

@@ -1,5 +1,50 @@
-
 .announceTxt input
 {
-width:598px;
+width:598px !important;
+}
+
+.announcementBody table {
+color: #333 !important; 
+
+width: 640px !important;
+border-collapse:collapse !important; 
+border-spacing: 0 !important;
+}
+
+.announcementBody td, .announcementBody th { border: 1px solid #CCC !important; height: 30px !important; } 
+
+.announcementBody th {
+background: #F3F3F3 !important;
+font-weight: bold !important;
+}
+
+.announcementBody td {
+background: #FAFAFA !important;
+text-align: center !important;
+}
+
+.announcementBody
+{
+padding-bottom:10px;
+font-size: 15px;
+}
+
+.announcementTitle
+{
+color:red; 
+margin-bottom:0px;
+font-size: 18px;
+}
+
+.annoucementMeta
+{
+color: #888888;
+margin-top:-5px;
+font-size:11px;
+}
+
+.announcementBody img
+{
+max-width: 650px !important;
+height:auto;
 }
