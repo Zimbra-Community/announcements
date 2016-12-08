@@ -41,6 +41,10 @@ AnnouncementsZimlet.prototype.init =
          toolbar.createButton("AddAnnouncement", {text: "Add Announcement"});
          toolbar.addSelectionListener("AddAnnouncement", new AjxListener(this, this.addAnnouceOrComment));         
          app.launch();    
+
+        //to-do: read this from config, for loop it   
+        document.getElementById('announceFeeds').innerHTML = document.getElementById('announceFeeds').innerHTML + "<h2 style=\"color:red\">Hivos.org news</h2><div id=\"feed1\"></div>";
+        document.getElementById('announceFeeds').innerHTML = document.getElementById('announceFeeds').innerHTML + "<h2 style=\"color:red\">Vacancies</h2><div id=\"feed2\"></div>";      
       }
       else
       {
@@ -74,7 +78,7 @@ AnnouncementsZimlet.prototype.timer = function ()
       };
       appCtxt.getAppController().sendRequest(params);      
       AnnouncementsZimlet.prototype.timer();
-   },60000);
+   },6000);
 }
     
 AnnouncementsZimlet.prototype.showContent = function (content)
@@ -100,9 +104,6 @@ AnnouncementsZimlet.prototype.showContent = function (content)
        }
    }   
    //to-do: read this from config, for loop it   
-   document.getElementById('announceFeeds').innerHTML = document.getElementById('announceFeeds').innerHTML + "<h2 style=\"color:red\">Hivos.org news</h2><div id=\"feed1\"></div>";
-   document.getElementById('announceFeeds').innerHTML = document.getElementById('announceFeeds').innerHTML + "<h2 style=\"color:red\">Vacancies</h2><div id=\"feed2\"></div>";   
- 
    AnnouncementsZimlet._feed = 'https://www.hivos.org/news.xml';
 	var postCallback = null;
 	postCallback = new AjxCallback(this, AnnouncementsZimlet.prototype._displayRSSResultsDialog, ["feed1"]);
