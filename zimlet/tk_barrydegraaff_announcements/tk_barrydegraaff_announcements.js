@@ -78,7 +78,7 @@ AnnouncementsZimlet.prototype.timer = function ()
       };
       appCtxt.getAppController().sendRequest(params);      
       AnnouncementsZimlet.prototype.timer();
-   },6000);
+   },60000);
 }
     
 AnnouncementsZimlet.prototype.showContent = function (content)
