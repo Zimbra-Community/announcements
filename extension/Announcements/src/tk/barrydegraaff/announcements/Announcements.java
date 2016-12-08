@@ -47,6 +47,8 @@ public class Announcements extends DocumentHandler {
             switch (request.getAttribute("action")) {
                 case "getAnnouncements":
                     return getAnnouncements(db_connect_string, response);
+                case "publishAnnouncements":
+                    return publishAnnouncements(db_connect_string, request, response);
                 default:
                     return getAnnouncements(db_connect_string, response);
             }
@@ -99,5 +101,28 @@ public class Announcements extends DocumentHandler {
             return response;
         }
     }
+
+    private Element publishAnnouncements(String db_connect_string, Element request, Element response) {
+        try {
+            String result = "";
+            //DriverManager.setLogWriter(new PrintWriter(System.out));
+            Connection connection = DriverManager.getConnection(db_connect_string);
+            PreparedStatement queryApp = null;
+            ResultSet announcements = null;
+
+            if (!connection.isClosed()) {
+                queryApp = connection.prepareStatement("INSERT INTO AnnouncementsEntry VALUES (NULL, "+request.getAttribute("userName")+", NOW(),"+request.getAttribute("title")+","+request.getAttribute("content")+")");
+                announcements = queryApp.executeQuery();
+                announcements.close();
+                connection.close();
+            }
+            return response;
+        } catch (Exception ex) {
+            Element content = response.addNonUniqueElement("content");
+            content.setText("Exception thrown: " + ex.toString());
+            return response;
+        }
+    }
+
 }
 

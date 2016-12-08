@@ -160,6 +160,8 @@ AnnouncementsZimlet.prototype.addAnnouceOrCommentCallback = function (title, add
    soapDoc.getMethod().setAttribute("action", "publishAnnouncements");
    soapDoc.getMethod().setAttribute("title", encodeURIComponent(title));
    soapDoc.getMethod().setAttribute("body", encodeURIComponent(body));
+   soapDoc.getMethod().setAttribute("userName", encodeURIComponent(appCtxt.get(ZmSetting.DISPLAY_NAME) + ' <' + appCtxt.getActiveAccount().name + '>'));
+
    var params = {
    soapDoc: soapDoc,
    asyncMode: true,
