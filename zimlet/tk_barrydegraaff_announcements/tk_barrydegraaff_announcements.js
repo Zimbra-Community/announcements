@@ -137,23 +137,26 @@ AnnouncementsZimlet.prototype.showCommentsCallback = function (content)
    var resultHTML = "";
    var entryId = "";
    var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
-   announcements.forEach(function(announcement) {
-      entryId = announcement.entryId;
-      resultHTML = resultHTML + "<div class=\"announcementBody\" style=\"border:1px solid red; border-radius:5px; padding:10px\">"+
-      "<small class=\"annoucementMeta\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.createDate.substring(0,announcement.createDate.length-5))+" "+
-      AnnouncementsZimlet.prototype.escapeHtml(announcement.userName)+"</small><br><br>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.content) +
-      "</div><br>";
-   });
-   document.getElementById('commentsFor'+entryId).innerHTML = resultHTML;
-  
-   var divs = document.getElementsByClassName('announcementBody');
-   for (var i = 0; i < divs.length; i++) {
-       var a = divs[i].getElementsByTagName('a');
-       for (var j = 0; j < a.length; j++) {
-           var elem = a[j];
-           elem.setAttribute('target', '_blank');
-       }
-   }   
+   if(announcements)
+   {
+      announcements.forEach(function(announcement) {
+         entryId = announcement.entryId;
+         resultHTML = resultHTML + "<div class=\"announcementBody\" style=\"border:1px solid red; border-radius:5px; padding:10px\">"+
+         "<small class=\"annoucementMeta\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.createDate.substring(0,announcement.createDate.length-5))+" "+
+         AnnouncementsZimlet.prototype.escapeHtml(announcement.userName)+"</small><br><br>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.content) +
+         "</div><br>";
+      });
+      document.getElementById('commentsFor'+entryId).innerHTML = resultHTML;
+     
+      var divs = document.getElementsByClassName('announcementBody');
+      for (var i = 0; i < divs.length; i++) {
+          var a = divs[i].getElementsByTagName('a');
+          for (var j = 0; j < a.length; j++) {
+              var elem = a[j];
+              elem.setAttribute('target', '_blank');
+          }
+      }   
+   }
 }
     
 AnnouncementsZimlet.prototype.status =
