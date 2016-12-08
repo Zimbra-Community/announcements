@@ -49,6 +49,8 @@ public class Announcements extends DocumentHandler {
                     return getAnnouncements(db_connect_string, response);
                 case "publishAnnouncementOrComment":
                     return publishAnnouncementOrComment(db_connect_string, request, response);
+                case "getComments":
+                    return getComments(db_connect_string, request, response);
                 default:
                     return getAnnouncements(db_connect_string, response);
             }
@@ -64,7 +66,7 @@ public class Announcements extends DocumentHandler {
         try {
             FileInputStream input = new FileInputStream("/opt/zimbra/lib/ext/Announcements/db.properties");
             prop.load(input);
-
+            input.close();
             return prop.getProperty("db_connect_string");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -76,7 +78,6 @@ public class Announcements extends DocumentHandler {
     private Element getAnnouncements(String db_connect_string, Element response) {
         try {
             String result = "";
-            //DriverManager.setLogWriter(new PrintWriter(System.out));
             Connection connection = DriverManager.getConnection(db_connect_string);
             PreparedStatement queryApp = null;
             ResultSet announcements = null;
@@ -106,11 +107,43 @@ public class Announcements extends DocumentHandler {
         }
     }
 
+    private Element getComments(String db_connect_string, Element request, Element response) {
+        try {
+            if(this.isNumeric(request.getAttribute("entryId"))) {
+                String result = "";
+                Connection connection = DriverManager.getConnection(db_connect_string);
+                ResultSet announcements = null;
+                if (!connection.isClosed()) {
+                    PreparedStatement stmt = connection.prepareStatement("SELECT * from AnnouncementsComments WHERE entryId = ? order by createDate DESC LIMIT 0, 25");
+                    stmt.setString(1, request.getAttribute("entryId"));
+                    stmt.executeQuery();
+                    announcements = stmt.executeQuery();
+
+                    while (announcements.next()) {
+                        Element content = response.addNonUniqueElement("content");
+                        content.addAttribute("id", announcements.getString("id"));
+                        content.addAttribute("entryId", announcements.getString("entryId"));
+                        content.addAttribute("createDate", announcements.getTimestamp("createDate").toString());
+                        content.addAttribute("userName", announcements.getString("userName"));
+                        content.addAttribute("content", announcements.getString("content"));
+                    }
+                    announcements.close();
+                    connection.close();
+                }
+            }
+            return response;
+        } catch (Exception ex) {
+            Element content = response.addNonUniqueElement("content");
+            content.setText("Exception thrown: " + ex.toString());
+            return response;
+        }
+    }
+
+
     private Element publishAnnouncementOrComment(String db_connect_string, Element request, Element response) {
         try {
             String result = "";
             Connection connection = DriverManager.getConnection(db_connect_string);
-            PreparedStatement queryApp = null;
 
             if (!connection.isClosed()) {
                 if(this.isNumeric(request.getAttribute("entryId")))
@@ -159,6 +192,5 @@ public class Announcements extends DocumentHandler {
         }
         return true;
     }
-
 }
 

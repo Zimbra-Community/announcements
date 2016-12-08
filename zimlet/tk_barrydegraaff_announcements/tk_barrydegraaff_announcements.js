@@ -33,7 +33,7 @@ AnnouncementsZimlet.prototype.init =
          var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
          var app = appCtxt.getApp(this.AnnounceTab);
          app.activate(true, this.AnnounceTab);
-         app.setContent('<table><tr><td><div id="Announcements" style="padding-left:10px;padding-right:10px;margin-top:-19px;width:800px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400"></div></td><td><div id="announceFeeds" style="padding:10px;width:400px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400"></div></td></tr></table>');
+         app.setContent('<table><tr><td><div id="Announcements" style="padding-left:10px;padding-right:10px;width:800px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400"></div></td><td><div id="announceFeeds" style="padding-left:10px;padding-right:10px;width:400px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400"></div></td></tr></table>');
          var overview = app.getOverview(); // returns ZmOverview
          overview.setContent('<div id="Announcements-Left" style="padding:10px;"><img style="width:80%; height:auto" src="'+zimletInstance.getResource('logo.svg')+'"><h2 style="color:red">Links</h2>&bull; <a style="color:red; font-size:14px;" href="https://hivos.myscienta.com" target="_blank">Scienta</a><br></div>');
          overview._setAllowSelection();      
@@ -57,17 +57,37 @@ AnnouncementsZimlet.prototype.init =
    callback: new AjxCallback(void 0, this.showContent)
    };
    appCtxt.getAppController().sendRequest(params);
+   
+   AnnouncementsZimlet.prototype.timer();
+}
+
+AnnouncementsZimlet.prototype.timer = function ()
+{
+   
+   setTimeout(function(){      
+      var soapDoc = AjxSoapDoc.create("Announcements", "urn:Announcements", null);
+      soapDoc.getMethod().setAttribute("action", "getAnnouncements");
+      var params = {
+      soapDoc: soapDoc,
+      asyncMode: true,
+      callback: new AjxCallback(void 0, AnnouncementsZimlet.prototype.showContent)
+      };
+      appCtxt.getAppController().sendRequest(params);      
+      AnnouncementsZimlet.prototype.timer();
+   },60000);
 }
     
 AnnouncementsZimlet.prototype.showContent = function (content)
 {
+   AnnouncementsZimlet.prototype.resizeApp();
    var announcements = content._data.AnnouncementsResponse.content;
-   var resultHTML = "";var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
+   var resultHTML = "";
+   var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
    announcements.forEach(function(announcement) {
       resultHTML = resultHTML + "<h2 class=\"announcementTitle\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.title)+"</h2><div class=\"announcementBody\">"+
       "<small class=\"annoucementMeta\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.createDate.substring(0,announcement.createDate.length-5))+" "+
       AnnouncementsZimlet.prototype.escapeHtml(announcement.userName)+"</small><br><br>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.content) +
-      "</div><br><table><tr><td><div style=\"width:37px; height:19px; color: white; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; background-image:url('"+zimletInstance.getResource('comment.png')+"')\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.comments)+"</div></td><td>&nbsp;&nbsp;<button style=\"height:20px; \" onclick=\"AnnouncementsZimlet.prototype.addAnnouceOrComment("+announcement.entryId+")\">Add comment</button></td></tr></table><hr style=\"border:none; height:1px; color:red; background-color:red;\">";
+      "</div><div id=\"commentsFor"+announcement.entryId+"\"></div><br><table><tr><td><div onclick=\"AnnouncementsZimlet.prototype.showComments("+announcement.entryId+")\" style=\"cursor:pointer;width:37px; height:19px; color: white; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; background-image:url('"+zimletInstance.getResource('comment.png')+"')\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.comments)+"</div></td><td>&nbsp;&nbsp;<button style=\"height:20px; \" onclick=\"AnnouncementsZimlet.prototype.addAnnouceOrComment("+announcement.entryId+")\">Add comment</button></td></tr></table><hr style=\"border:none; height:1px; color:red; background-color:red;\">";
    });
    document.getElementById('Announcements').innerHTML = resultHTML;
    
@@ -79,8 +99,6 @@ AnnouncementsZimlet.prototype.showContent = function (content)
            elem.setAttribute('target', '_blank');
        }
    }   
-   
-
    //to-do: read this from config, for loop it   
    document.getElementById('announceFeeds').innerHTML = document.getElementById('announceFeeds').innerHTML + "<h2 style=\"color:red\">Hivos.org news</h2><div id=\"feed1\"></div>";
    document.getElementById('announceFeeds').innerHTML = document.getElementById('announceFeeds').innerHTML + "<h2 style=\"color:red\">Vacancies</h2><div id=\"feed2\"></div>";   
@@ -94,22 +112,54 @@ AnnouncementsZimlet.prototype.showContent = function (content)
 	var postCallback = null;
 	postCallback = new AjxCallback(this, AnnouncementsZimlet.prototype._displayRSSResultsDialog, ["feed2"]);
 	AnnouncementsZimlet.prototype._invoke(postCallback);
-   
-   
 };
 
 
+AnnouncementsZimlet.prototype.showComments = function (entryId)
+{
+   AnnouncementsZimlet.prototype.resizeApp();
+   var soapDoc = AjxSoapDoc.create("Announcements", "urn:Announcements", null);
+   soapDoc.getMethod().setAttribute("action", "getComments");
+   soapDoc.getMethod().setAttribute("entryId", entryId);      
    
+   var params = {
+   soapDoc: soapDoc,
+   asyncMode: true,
+   callback: new AjxCallback(void 0, this.showCommentsCallback)
+   };
+   appCtxt.getAppController().sendRequest(params);   
+}
+
+AnnouncementsZimlet.prototype.showCommentsCallback = function (content)
+{
+   var announcements = content._data.AnnouncementsResponse.content;
+   var resultHTML = "";
+   var entryId = "";
+   var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
+   announcements.forEach(function(announcement) {
+      entryId = announcement.entryId;
+      resultHTML = resultHTML + "<div class=\"announcementBody\" style=\"border:1px solid red; border-radius:5px; padding:10px\">"+
+      "<small class=\"annoucementMeta\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.createDate.substring(0,announcement.createDate.length-5))+" "+
+      AnnouncementsZimlet.prototype.escapeHtml(announcement.userName)+"</small><br><br>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.content) +
+      "</div><br>";
+   });
+   document.getElementById('commentsFor'+entryId).innerHTML = resultHTML;
+  
+   var divs = document.getElementsByClassName('announcementBody');
+   for (var i = 0; i < divs.length; i++) {
+       var a = divs[i].getElementsByTagName('a');
+       for (var j = 0; j < a.length; j++) {
+           var elem = a[j];
+           elem.setAttribute('target', '_blank');
+       }
+   }   
+}
     
 AnnouncementsZimlet.prototype.status =
   function(text, type) {
     var transitions = [ ZmToast.FADE_IN, ZmToast.PAUSE, ZmToast.PAUSE, ZmToast.PAUSE, ZmToast.FADE_OUT ];
     appCtxt.getAppController().setStatusMsg(text, type, null, transitions);
   };
-
-AnnouncementsZimlet.prototype.AddAnnouncement = function() {
-   alert('Not yet implemented');
-}
 
 AnnouncementsZimlet.prototype.escapeHtml =
 function (unsafe) {
@@ -120,6 +170,7 @@ function (unsafe) {
 };
 
 AnnouncementsZimlet.prototype.addAnnouceOrComment = function(entryId) {
+   AnnouncementsZimlet.prototype.resizeApp();
    var addingComment = !isNaN(entryId);
    
    var addAnnouceOrComment = new DwtDialog({parent: appCtxt.getShell(), disposeOnPopDown: true});
@@ -293,7 +344,7 @@ AnnouncementsZimlet.prototype.feedGetHTML =
 function() {
 	var html = "";
 	var i = 0;
-   html = "<div style=\"border:1px solid grey; border-radius:2px;padding:10px; width:80%\">";
+   html = "<div style=\"border:1px solid red; border-radius:5px;padding:10px; width:80%\">";
 	for(var j=0;j<AnnouncementsZimlet.titleDescArray.length; j++) {
 		var val = AnnouncementsZimlet.titleDescArray[j];
 
@@ -303,3 +354,10 @@ function() {
    html = html + "</div>";
 	return html;
 };
+
+AnnouncementsZimlet.prototype.resizeApp = function()
+{
+   var appHeight = (Math.max( document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight )-110 );
+   document.getElementById('Announcements').style.height=appHeight+'px';
+   document.getElementById('announceFeeds').style.height=appHeight+'px';  
+}   
