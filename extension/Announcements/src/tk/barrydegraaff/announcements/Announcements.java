@@ -26,6 +26,7 @@ import com.zimbra.common.soap.Element;
 import com.zimbra.common.soap.SoapParseException;
 import com.zimbra.soap.DocumentHandler;
 import com.zimbra.soap.ZimbraSoapContext;
+import com.zimbra.cs.account.Account;
 
 import java.sql.*;
 import java.io.*;
@@ -40,6 +41,7 @@ public class Announcements extends DocumentHandler {
             throws ServiceException {
         try {
             ZimbraSoapContext zsc = getZimbraSoapContext(context);
+            Account account = getRequestedAccount(zsc);
             Element response = zsc.createElement(
                     "AnnouncementsResponse"
             );
@@ -48,7 +50,7 @@ public class Announcements extends DocumentHandler {
                 case "getAnnouncements":
                     return getAnnouncements(db_connect_string, response);
                 case "publishAnnouncementOrComment":
-                    return publishAnnouncementOrComment(db_connect_string, request, response);
+                    return publishAnnouncementOrComment(db_connect_string, request, response, account);
                 case "getComments":
                     return getComments(db_connect_string, request, response);
                 default:
@@ -140,23 +142,24 @@ public class Announcements extends DocumentHandler {
     }
 
 
-    private Element publishAnnouncementOrComment(String db_connect_string, Element request, Element response) {
+    private Element publishAnnouncementOrComment(String db_connect_string, Element request, Element response, Account account) {
         try {
             String result = "";
             Connection connection = DriverManager.getConnection(db_connect_string);
 
+            String userName = account.getDisplayName() + " &lt;" + account.getName() +"&gt;";
             if (!connection.isClosed()) {
                 if(this.isNumeric(request.getAttribute("entryId")))
                 {
                     PreparedStatement stmt = connection.prepareStatement("INSERT INTO AnnouncementsComments VALUES (NULL, ?, ?, NOW(),?)");
                     stmt.setString(1, this.uriDecode(request.getAttribute("entryId")));
-                    stmt.setString(2, this.uriDecode(request.getAttribute("userName")));
+                    stmt.setString(2, userName);
                     stmt.setString(3, this.uriDecode(request.getAttribute("content")));
                     stmt.executeQuery();
                 }
                 else {
                     PreparedStatement stmt = connection.prepareStatement("INSERT INTO AnnouncementsEntry VALUES (NULL, ?, NOW(),?,?)");
-                    stmt.setString(1, this.uriDecode(request.getAttribute("userName")));
+                    stmt.setString(1, userName);
                     stmt.setString(2, this.uriDecode(request.getAttribute("title")));
                     stmt.setString(3, this.uriDecode(request.getAttribute("content")));
                     stmt.executeQuery();

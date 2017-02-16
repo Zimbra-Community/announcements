@@ -83,26 +83,32 @@ AnnouncementsZimlet.prototype.timer = function ()
     
 AnnouncementsZimlet.prototype.showContent = function (content)
 {
-   AnnouncementsZimlet.prototype.resizeApp();
-   var announcements = content._data.AnnouncementsResponse.content;
-   var resultHTML = "";
-   var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
-   announcements.forEach(function(announcement) {
-      resultHTML = resultHTML + "<h2 class=\"announcementTitle\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.title)+"</h2><div class=\"announcementBody\">"+
-      "<small class=\"annoucementMeta\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.createDate.substring(0,announcement.createDate.length-5))+" "+
-      AnnouncementsZimlet.prototype.escapeHtml(announcement.userName)+"</small><br><br>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.content) +
-      "</div><div id=\"commentsFor"+announcement.entryId+"\"></div><br><table><tr><td><div onclick=\"AnnouncementsZimlet.prototype.showComments("+announcement.entryId+")\" style=\"cursor:pointer;width:37px; height:19px; color: white; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; background-image:url('"+zimletInstance.getResource('comment.png')+"')\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.comments)+"</div></td><td>&nbsp;&nbsp;<button style=\"height:20px; \" onclick=\"AnnouncementsZimlet.prototype.addAnnouceOrComment("+announcement.entryId+")\">Add comment</button></td></tr></table><hr style=\"border:none; height:1px; color:red; background-color:red;\">";
-   });
-   document.getElementById('Announcements').innerHTML = resultHTML;
+   try {
+      AnnouncementsZimlet.prototype.resizeApp();
+      var announcements = content._data.AnnouncementsResponse.content;
+      var resultHTML = "";
+      var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
+      announcements.forEach(function(announcement) {
+         resultHTML = resultHTML + "<h2 class=\"announcementTitle\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.title)+"</h2><div class=\"announcementBody\">"+
+         "<small class=\"annoucementMeta\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.createDate.substring(0,announcement.createDate.length-5))+" "+
+         AnnouncementsZimlet.prototype.escapeHtml(announcement.userName)+"</small><br><br>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.content) +
+         "</div><div id=\"commentsFor"+announcement.entryId+"\"></div><br><table><tr><td><div onclick=\"AnnouncementsZimlet.prototype.showComments("+announcement.entryId+")\" style=\"cursor:pointer;width:37px; height:19px; color: white; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; background-image:url('"+zimletInstance.getResource('comment.png')+"')\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.comments)+"</div></td><td>&nbsp;&nbsp;<button style=\"height:20px; \" onclick=\"AnnouncementsZimlet.prototype.addAnnouceOrComment("+announcement.entryId+")\">Add comment</button></td></tr></table><hr style=\"border:none; height:1px; color:red; background-color:red;\">";
+      });
+      document.getElementById('Announcements').innerHTML = resultHTML;
+      
+      var divs = document.getElementsByClassName('announcementBody');
+      for (var i = 0; i < divs.length; i++) {
+          var a = divs[i].getElementsByTagName('a');
+          for (var j = 0; j < a.length; j++) {
+              var elem = a[j];
+              elem.setAttribute('target', '_blank');
+          }
+      }   
+   } catch (err)
+   {
+      //ignore   
+   }
    
-   var divs = document.getElementsByClassName('announcementBody');
-   for (var i = 0; i < divs.length; i++) {
-       var a = divs[i].getElementsByTagName('a');
-       for (var j = 0; j < a.length; j++) {
-           var elem = a[j];
-           elem.setAttribute('target', '_blank');
-       }
-   }   
    //to-do: read this from config, for loop it   
    AnnouncementsZimlet._feed = 'https://www.hivos.org/news.xml';
 	var postCallback = null;
@@ -314,7 +320,6 @@ function(postCallback, reponse) {
 	try {
 		items = reponse.xml.getElementsByTagName("item");
 	} catch(e) {//there was some expn getting feed
-		AnnouncementsZimlet._showErrorMsg(e);
 		return;
 	}
 	AnnouncementsZimlet.titleDescArray = new Array();
