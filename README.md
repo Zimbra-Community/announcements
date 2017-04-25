@@ -11,4 +11,7 @@ Show a list of announcements in Zimbra as the first thing people see after login
      And do:
      zmprov ma admin@myzimbra.com zimbraFeaturePortalEnabled TRUE
 
+     Enable feedreader:
+     zmprov mc default +zimbraProxyAllowedDomains domain.com
+
  
