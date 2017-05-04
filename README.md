@@ -1,4 +1,4 @@
-Annoucements Portal
+Announcements Portal
 ==========
 
 If you find Annoucements Portal useful and want to support its continued development, you can make donations via:
@@ -8,7 +8,7 @@ If you find Annoucements Portal useful and want to support its continued develop
 This portal shows a list of announcements and RSS feeds in Zimbra as the first thing people see after login. Also People can
 add new announcements or comment on them.
 
-![https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/announcements-screenshot.png](https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/announcements-screenshot.png)
+![https://raw.githubusercontent.com/Zimbra-Community/announcements/master/announcements-screenshot.png](https://raw.githubusercontent.com/Zimbra-Community/announcements/master/announcements-screenshot.png)
 
 ### Install prerequisites
   - Zimbra 8.7 and above
@@ -16,7 +16,7 @@ add new announcements or comment on them.
 ### Installing
 Use the automated installer:
 
-    wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/announcement-installer.sh -O /tmp/announcement-installer.sh
+    wget https://raw.githubusercontent.com/Zimbra-Community/announcements/master/announcement-installer.sh -O /tmp/announcement-installer.sh
     chmod +rx /tmp/announcement-installer.sh
     /tmp/announcement-installer.sh
 
