@@ -25,6 +25,6 @@
 
     <!-- page layout -->
     <html><![CDATA[
-    <table><tr><td><div id="Announcements" style="padding-left:10px;padding-right:10px;width:800px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400"></div></td><td><div id="announceFeeds" style="padding-left:10px;padding-right:10px;width:400px; height:'+appHeight+'px; border:0px;overflow: scroll;z-index:400"></div></td></tr></table>
+<div id="AnnouncementPortal"></div>
     ]]></html>
 </portal>
