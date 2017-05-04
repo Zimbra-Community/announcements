@@ -31,7 +31,7 @@ font-size: 15px;
 
 .announcementTitle
 {
-color:red; 
+color:#007cc3; 
 margin-bottom:0px;
 font-size: 18px;
 }
@@ -47,4 +47,114 @@ font-size:11px;
 {
 max-width: 650px !important;
 height:auto;
+}
+
+.AnnouncementsZimletTile
+{
+min-height:125px;
+min-width:130px;
+cursor:pointer;
+}
+
+#AnnouncementPortalTiles{
+margin:25px;
+}
+
+#Announcements{
+margin-left:25px;
+margin-right:25px;
+}
+
+#feed1, #feed2, #feed3
+{
+border: 1px solid #dcdcdc;
+border-bottom-left-radius:5px;
+border-bottom-right-radius:5px;
+width:450px;
+padding:10px;
+}
+
+.feeditem
+{
+ border:none;
+  border-top:1px dotted #5a5a5a;
+  color:#fff;
+  background-color:#fff;
+  height:1px;
+  width:100%;
+}
+
+.feedtitle
+{
+border: 1px solid #da2128;
+border-top-left-radius:5px;
+border-top-right-radius:5px;
+width:450px;
+padding:10px;
+background-color:#da2128;
+color:white;
+font-weight:700;
+font-size:16px;
+}
+
+.announcementBody
+{
+border: 1px solid #dcdcdc;
+border-bottom-left-radius:5px;
+border-bottom-right-radius:5px;
+border-top-right-radius:5px;
+width:700px;
+padding:10px;
+}
+
+.announcementTitle
+{
+border: 1px solid #da2128;
+border-top-left-radius:5px;
+border-top-right-radius:5px;
+width:450px;
+padding:10px;
+background-color:#da2128;
+color:white;
+font-weight:700;
+font-size:16px;
+}
+
+.announcementFooter
+{
+width:700px;
+text-align:right;
+padding-top:5px;
+}
+
+.announcementFooter a
+{
+cursor: pointer;
+}
+
+.AnnouncementsZimletTileDiv
+{
+width:125px;
+height:131px;
+background-repeat:no-repeat;
+color: white;
+font-weight:700;
+}
+
+.AnnouncementsZimletTileDiv a
+{
+color: white;
+font-weight:700;
+padding: 5px;
+}
+
+.commentBody
+{
+text-align:left;
+border: 1px dotted #dcdcdc;
+border-radius:5px;
+padding:5px;
+margin-top:1px;
+width:700px;
+padding:10px;
 }

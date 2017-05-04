@@ -1,4 +1,4 @@
-# Annoucements
+# Annoucements Portal
 Show a list of announcements in Zimbra as the first thing people see after login.
 
 ![https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/announcements-screenshot.png](https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/announcements-screenshot.png)

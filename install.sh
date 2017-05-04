@@ -56,13 +56,20 @@ EOF
 echo "Creating database and user"
 /opt/zimbra/bin/mysql < "${ANNOUNCEMENTS_DBCREATE}"
 
+echo "Populating announcements_db please wait..."
+wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/AnnouncementsEntry.sql -O /root/AnnouncementsEntry.sql
+/opt/zimbra/bin/mysql announcements_db < /root/AnnouncementsEntry.sql
+
+echo "Installing Zimlet"
+# to-do
+
+wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/
+
 echo "Install Portal Manifest"
 mkdir -p /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements
 wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/manifest.xml -O /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements/manifest.xml
 
-echo "Populating announcements_db please wait..."
-wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/AnnouncementsEntry.sql -O /root/AnnouncementsEntry.sql
-/opt/zimbra/bin/mysql announcements_db < /root/AnnouncementsEntry.sql
+
 
 echo "--------------------------------------------------------------------------------------------------------------"
 echo "You still need to restart some services to load the changes:"
