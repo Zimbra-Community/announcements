@@ -18,7 +18,7 @@ Use the automated installer:
 
     wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/announcement-installer.sh -O /tmp/announcement-installer.sh
     chmod +rx /tmp/announcement-installer.sh
-    /tmp/tmp/announcement-installer.sh
+    /tmp/announcement-installer.sh
 
     zmprov mc default zimbraFeaturePortalEnabled TRUE
     zmprov mc default zimbraPortalName tk_barrydegraaff_announcements
