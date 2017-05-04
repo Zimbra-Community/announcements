@@ -61,6 +61,7 @@ mkdir -p /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements
 wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/manifest.xml -O /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements/manifest.xml
 
 echo "Populating announcements_db please wait..."
+wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/AnnouncementsEntry.sql -O /root/AnnouncementsEntry.sql
 /opt/zimbra/bin/mysql announcements_db < /root/AnnouncementsEntry.sql
 
 echo "--------------------------------------------------------------------------------------------------------------"
@@ -68,5 +69,5 @@ echo "You still need to restart some services to load the changes:"
 echo "su - zimbra -c \"zmmailboxdctl restart\""
 echo "Enable the portal for a COS:"
 echo "zmprov mc default zimbraFeaturePortalEnabled TRUE"
-echo "zmprov mc default zimbraPortalName example"
+echo "zmprov mc default zimbraPortalName tk_barrydegraaff_announcements"
 echo "Alternatively you can enable it per user: zmprov ma admin@myzimbra.com zimbraFeaturePortalEnabled TRUE"
