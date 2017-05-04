@@ -57,16 +57,16 @@ echo "Creating database and user"
 /opt/zimbra/bin/mysql < "${ANNOUNCEMENTS_DBCREATE}"
 
 echo "Populating announcements_db please wait..."
-wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/AnnouncementsEntry.sql -O /root/AnnouncementsEntry.sql
+wget --no-cache https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/AnnouncementsEntry.sql -O /root/AnnouncementsEntry.sql
 /opt/zimbra/bin/mysql announcements_db < /root/AnnouncementsEntry.sql
 
 echo "Installing Zimlet"
-# to-do
-wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/
+wget --no-cache https://github.com/Zimbra-Community/annoucements/releases/download/0.0.1/tk_barrydegraaff_announcements.zip -O /tmp/tk_barrydegraaff_announcements.zip
+su - zimbra -c "zmzimletctl deploy /tmp/tk_barrydegraaff_announcements.zip"
 
 echo "Install Portal Manifest"
 mkdir -p /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements
-wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/manifest.xml -O /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements/manifest.xml
+wget --no-cache https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/manifest.xml -O /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements/manifest.xml
 
 
 
