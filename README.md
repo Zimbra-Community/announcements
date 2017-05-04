@@ -38,7 +38,7 @@ Optional, configure your feeds and allow Zimbra to fetch them:
     zmprov mc default +zimbraProxyAllowedDomains zimbra.com
     zmprov mc default +zimbraProxyAllowedDomains nextcloud.com
     
-Set configurable options here: /opt/zimbra/zimlets-deployed/_dev/tk_barrydegraaff_announcements/config_template.xml
+Set configurable options here: [config_template.xml](https://raw.githubusercontent.com/Zimbra-Community/announcements/master/zimlet/tk_barrydegraaff_announcements/config_template.xml)
 
  
 ### Known issues
