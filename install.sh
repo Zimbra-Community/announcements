@@ -56,13 +56,9 @@ EOF
 echo "Creating database and user"
 /opt/zimbra/bin/mysql < "${ANNOUNCEMENTS_DBCREATE}"
 
-if [ -d "/opt/zimbra/common/share/database/" ]; then
-   #shipped version from Zimbra (8.7)
-   cd /opt/zimbra/common/share/database/ >/dev/null
-else
-   #shipped version from Zimbra (8.6)
-   cd /opt/zimbra/cbpolicy*/share/database/ >/dev/null
-fi
+echo "Install Portal Manifest"
+mkdir -p /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements
+wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/manifest.xml -O /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements/manifest.xml
 
 echo "Populating announcements_db please wait..."
 /opt/zimbra/bin/mysql announcements_db < /root/AnnouncementsEntry.sql
@@ -70,3 +66,7 @@ echo "Populating announcements_db please wait..."
 echo "--------------------------------------------------------------------------------------------------------------"
 echo "You still need to restart some services to load the changes:"
 echo "su - zimbra -c \"zmmailboxdctl restart\""
+echo "Enable the portal for a COS:"
+echo "zmprov mc default zimbraFeaturePortalEnabled TRUE"
+echo "zmprov mc default zimbraPortalName example"
+echo "Alternatively you can enable it per user: zmprov ma admin@myzimbra.com zimbraFeaturePortalEnabled TRUE"
