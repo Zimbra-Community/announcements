@@ -1,18 +1,34 @@
-# Annoucements Portal
-Show a list of announcements in Zimbra as the first thing people see after login.
+Annoucements Portal
+==========
+
+If you find Annoucements Portal useful and want to support its continued development, you can make donations via:
+- PayPal: info@barrydegraaff.tk
+- Bank transfer: IBAN NL55ABNA0623226413 ; BIC ABNANL2A
+
+This portal shows a list of announcements and RSS feeds in Zimbra as the first thing people see after login. Also People can
+add new announcements or comment on them.
 
 ![https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/announcements-screenshot.png](https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/announcements-screenshot.png)
 
-### To install 'Portal' version:
+### Install prerequisites
+  - Zimbra 8.7 and above
 
-     cat manifest.xml > /opt/zimbra/jetty-distribution-9.3.5.v20151012/webapps/zimbra/portals/example/manifest.xml
-     cat tk_barrydegraaff_announcements-portal.js > /media/iso/opt/zimbra/zimlets-deployed/_dev/tk_barrydegraaff_announcements/tk_barrydegraaff_announcements.js
+### Installing
+Use the automated installer:
 
-     And do:
-     zmprov ma admin@myzimbra.com zimbraFeaturePortalEnabled TRUE
+    wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/announcement-installer.sh -O /tmp/announcement-installer.sh
+    chmod +rx /tmp/announcement-installer.sh
+    /tmp/tmp/announcement-installer.sh
 
-     Enable feedreader:
-     zmprov mc default +zimbraProxyAllowedDomains domain.com
+    zmprov mc default zimbraFeaturePortalEnabled TRUE
+    zmprov mc default zimbraPortalName tk_barrydegraaff_announcements
+
+Optional, configure your feeds and allow Zimbra to fetch them:
+
+    zmprov mc default +zimbraProxyAllowedDomains zimbra.com
+    zmprov mc default +zimbraProxyAllowedDomains nextcloud.com
+    
+Set configurable options here: /opt/zimbra/zimlets-deployed/_dev/tk_barrydegraaff_announcements/config_template.xml
 
  
 ### Known issues
