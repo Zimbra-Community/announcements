@@ -6,9 +6,16 @@ If you find Annoucements Portal useful and want to support its continued develop
 - Bank transfer: IBAN NL55ABNA0623226413 ; BIC ABNANL2A
 
 This portal shows a list of announcements and RSS feeds in Zimbra as the first thing people see after login. Also People can
-add new announcements or comment on them.
+add new announcements and comment on them. Spread the word in your organization!
 
 ![https://raw.githubusercontent.com/Zimbra-Community/announcements/master/announcements-screenshot.png](https://raw.githubusercontent.com/Zimbra-Community/announcements/master/announcements-screenshot.png)
+
+### Features
+  - Customizable colors
+  - Configurable feeds
+  - Deploy per cos or per user, what you want
+  
+
 
 ### Install prerequisites
   - Zimbra 8.7 and above
