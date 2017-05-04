@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2016  Barry de Graaff
+# Copyright (C) 2016-2017  Barry de Graaff
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -62,7 +62,6 @@ wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/Anno
 
 echo "Installing Zimlet"
 # to-do
-
 wget https://raw.githubusercontent.com/Zimbra-Community/annoucements/master/
 
 echo "Install Portal Manifest"
@@ -77,4 +76,8 @@ echo "su - zimbra -c \"zmmailboxdctl restart\""
 echo "Enable the portal for a COS:"
 echo "zmprov mc default zimbraFeaturePortalEnabled TRUE"
 echo "zmprov mc default zimbraPortalName tk_barrydegraaff_announcements"
+echo "Optional, configure your feeds and allow Zimbra to fetch them:"
+echo "zmprov mc default +zimbraProxyAllowedDomains zimbra.com"
+echo "zmprov mc default +zimbraProxyAllowedDomains nextcloud.com"
+echo "See: /opt/zimbra/zimlets-deployed/_dev/tk_barrydegraaff_announcements/config_template.xml"
 echo "Alternatively you can enable it per user: zmprov ma admin@myzimbra.com zimbraFeaturePortalEnabled TRUE"

@@ -15,3 +15,6 @@ Show a list of announcements in Zimbra as the first thing people see after login
      zmprov mc default +zimbraProxyAllowedDomains domain.com
 
  
+### Known issues
+
+- The feed reader reads RSS feeds, not ATOM feeds.

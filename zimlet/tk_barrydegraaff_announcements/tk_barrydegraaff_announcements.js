@@ -43,7 +43,32 @@ AnnouncementsZimlet.prototype.init = function () {
       document.getElementById('zb__PORTAL__REFRESH_title').innerHTML = 'Add Announcement';
       document.getElementById('zb__PORTAL__REFRESH_title').title="";
                        
-      document.getElementById('AnnouncementPortal').innerHTML = document.getElementById('AnnouncementPortal').innerHTML + '<table><tr><td style="vertical-align:top"><div id="Announcements" style="padding-left:10px;width:760px; border:0px;"></div></td><td style="vertical-align:top"><div class="feedtitle">Hivos.org news</div><div id=\"feed1\"></div><br><br><div class="feedtitle">Vacancies</div><div id=\"feed2\"></div><br><br><div class="feedtitle">Zimbra on your device</div><div id=\"feed3\"></div></td></tr></table>'; 
+      document.getElementById('AnnouncementPortal').innerHTML = document.getElementById('AnnouncementPortal').innerHTML + '<table><tr><td style="vertical-align:top"><div id="Announcements" style="padding-left:10px;width:760px; border:0px;"></div></td>'+
+      '<td style="vertical-align:top">'+
+      
+      '<div id=\"feed1title\" class="feedtitle" style="background-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';border-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';color:'+zimletInstance._zimletContext.getConfig('color')+'">'+zimletInstance._zimletContext.getConfig('feed1title')+'</div><div id=\"feed1\"></div><br><br>'+
+      
+      '<div id=\"feed2title\" class="feedtitle" style="background-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';border-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';color:'+zimletInstance._zimletContext.getConfig('color')+'">'+zimletInstance._zimletContext.getConfig('feed2title')+'</div>'+      
+      '<div id=\"feed2\"></div><br><br>'+
+      
+      '<div id=\"feed3title\" class="feedtitle" style="background-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';border-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';color:'+zimletInstance._zimletContext.getConfig('color')+'">'+zimletInstance._zimletContext.getConfig('feed3title')+'</div>'+      
+      '<div id=\"feed3\"></div></td></tr></table>'; 
+      
+      if(!zimletInstance._zimletContext.getConfig('feed1title'))
+      {
+         document.getElementById('feed1title').style.display = 'none';
+         document.getElementById('feed1').style.display = 'none';
+      }
+      if(!zimletInstance._zimletContext.getConfig('feed2title'))
+      {
+         document.getElementById('feed2title').style.display = 'none';
+         document.getElementById('feed2').style.display = 'none';
+      }
+      if(!zimletInstance._zimletContext.getConfig('feed3title'))
+      {
+         document.getElementById('feed3title').style.display = 'none';
+         document.getElementById('feed3').style.display = 'none';
+      }      
       
       var soapDoc = AjxSoapDoc.create("Announcements", "urn:Announcements", null);
       soapDoc.getMethod().setAttribute("action", "getAnnouncements");
@@ -79,8 +104,9 @@ AnnouncementsZimlet.prototype.showContent = function (content)
       var announcements = content._data.AnnouncementsResponse.content;
       var resultHTML = "";
       var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
+      
       announcements.forEach(function(announcement) {
-         resultHTML = resultHTML + "<div class=\"announcementTitle\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.title)+"<div title=\"Show comments\" onclick=\"AnnouncementsZimlet.prototype.showComments("+announcement.entryId+")\" style=\"cursor:pointer;width:37px; height:19px; color: red; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; float:right; background-image:url('"+zimletInstance.getResource('comment-white.png?1')+"')\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.comments)+"</div></div><div class=\"announcementBody\">"+
+         resultHTML = resultHTML + "<div class=\"announcementTitle\" style=\"background-color:"+zimletInstance._zimletContext.getConfig("backgroudcolor")+";border-color:"+zimletInstance._zimletContext.getConfig("backgroudcolor")+";color:"+zimletInstance._zimletContext.getConfig("color")+"\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.title)+"<div title=\"Show comments\" onclick=\"AnnouncementsZimlet.prototype.showComments("+announcement.entryId+")\" style=\"cursor:pointer;width:37px; height:19px; color:"+zimletInstance._zimletContext.getConfig("color")+"; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; float:right; background-image:url('"+zimletInstance.getResource(zimletInstance._zimletContext.getConfig('commentspng'))+"')\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.comments)+"</div></div><div class=\"announcementBody\">"+
          "<small class=\"annoucementMeta\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.createDate.substring(0,announcement.createDate.length-5))+" "+
          AnnouncementsZimlet.prototype.escapeHtml(announcement.userName)+"</small><br><br>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.content);
          
@@ -92,7 +118,6 @@ AnnouncementsZimlet.prototype.showContent = function (content)
          resultHTML = resultHTML + "<div class=\"announcementFooter\"><a title=\"Add comments\" onclick=\"AnnouncementsZimlet.prototype.addAnnouceOrComment("+announcement.entryId+")\"><img src=\""+zimletInstance.getResource('plus.png')+"\"></a><a title=\"Scroll to top\" onclick=\"location.href='#announcementTop'\"><img src=\""+zimletInstance.getResource('top-arrow.png')+"\"></a></div></div><div id=\"commentsFor"+announcement.entryId+"\"></div><br>";
       });
       document.getElementById('Announcements').innerHTML = resultHTML;
-      AnnouncementsZimlet.prototype.setPhoneHelp();
       
       var divs = document.getElementsByClassName('announcementBody');
       for (var i = 0; i < divs.length; i++) {
@@ -108,16 +133,24 @@ AnnouncementsZimlet.prototype.showContent = function (content)
       //ignore   
    }
    
-   //to-do: read this from config, for loop it   
-   AnnouncementsZimlet._feed = 'https://www.hivos.org/news.xml';
-	var postCallback = null;
-	postCallback = new AjxCallback(this, AnnouncementsZimlet.prototype._displayRSSResultsDialog, ["feed1"]);
-	AnnouncementsZimlet.prototype._invoke(postCallback);
+   //to-do: read this from config, for loop it      
+   if(zimletInstance._zimletContext.getConfig('feed1url'))
+   {
+	   var postCallback = new AjxCallback(this, AnnouncementsZimlet.prototype._displayRSSResultsDialog, ["feed1"]);
+	   AnnouncementsZimlet.prototype._invoke(postCallback, zimletInstance._zimletContext.getConfig('feed1url'));
+   }
    
-   AnnouncementsZimlet._feed = 'https://www.hivos.org/vacancies/all/rss.xml';
-	var postCallback = null;
-	postCallback = new AjxCallback(this, AnnouncementsZimlet.prototype._displayRSSResultsDialog, ["feed2"]);
-	AnnouncementsZimlet.prototype._invoke(postCallback);
+	if(zimletInstance._zimletContext.getConfig('feed2url'))
+   {
+      var postCallback = new AjxCallback(this, AnnouncementsZimlet.prototype._displayRSSResultsDialog, ["feed2"]);
+	   AnnouncementsZimlet.prototype._invoke(postCallback, zimletInstance._zimletContext.getConfig('feed2url'));
+   }
+
+	if(zimletInstance._zimletContext.getConfig('feed3url'))
+   {
+      var postCallback = new AjxCallback(this, AnnouncementsZimlet.prototype._displayRSSResultsDialog, ["feed3"]);
+	   AnnouncementsZimlet.prototype._invoke(postCallback, zimletInstance._zimletContext.getConfig('feed3url'));
+   }
 };
 
 AnnouncementsZimlet.prototype.showComments = function (entryId)
@@ -160,14 +193,6 @@ AnnouncementsZimlet.prototype.showCommentsCallback = function (content)
           }
       }   
    }
-};
-
-AnnouncementsZimlet.prototype.setPhoneHelp = function()
-{
-   var username = appCtxt.getActiveAccount().name.match(/.*@/);
-   username = username[0].replace('@','');
-   
-   document.getElementById('feed3').innerHTML ='<div style="width:100%; margin:0px;height:100%; border:0px;">Here are some video links to help you configure Zimbra on your smart phone. Choose your device: <ul><li><a target="_blank" href="https://youtu.be/unZR7G8oIPw">iPhone</a></li><li><a target="_blank" href="https://youtu.be/fWyT--AVuSU">Android</a></li><li><a target="_blank" href="https://youtu.be/HvsNo6Wqf3Q">Windows Phone</a></li></ul><b>Other devices and laptops</b><table><tbody><tr><td style="width: 100px;">What?</td><td style="width: 100px;">Protocol</td><td style="width: 100px;">Server</td><td style="width: 100px;">Port</td><td style="width: 100px;">Security</td></tr><tr><td style="width: 100px;">Incoming mail</td><td style="width: 100px;">IMAP</td><td style="width: 100px;">mail.hivos.org</td><td style="width: 100px;">993</td><td style="width: 100px;">SSL/TLS</td></tr><tr><td style="width: 100px;">Outgoing mail</td><td style="width: 100px;">SMTP</td><td style="width: 100px;">mail.hivos.org</td><td style="width: 100px;">587</td><td style="width: 100px;">STARTTLS</td></tr><tr><td style="width: 100px;">Calendar</td><td style="width: 100px;">CalDAV</td><td colspan="3">https://mail.hivos.org/dav/<b>'+username+'</b>/Calendar</td></tr></tbody></table></div>';
 };
  
 AnnouncementsZimlet.prototype.status =
@@ -359,8 +384,8 @@ AnnouncementsZimlet.prototype.addAnnouceOrCommentCallback = function (title, add
 /* Code to deal with RSS feeds */
 
 AnnouncementsZimlet.prototype._invoke =
-function(postCallback) {
-	var feedUrl = ZmZimletBase.PROXY + AjxStringUtil.urlComponentEncode(AnnouncementsZimlet._feed);
+function(postCallback, url) {
+	var feedUrl = ZmZimletBase.PROXY + AjxStringUtil.urlComponentEncode(url);
 	AjxRpc.invoke(null, feedUrl, null, new AjxCallback(this, AnnouncementsZimlet.prototype._reponseHandler, postCallback), true);
 };
 
@@ -394,7 +419,7 @@ function(postCallback, reponse) {
 			}
 			counter++;
 		}catch(e) {//print some exception
-			AnnouncementsZimlet._showErrorMsg(e);
+			console.log(e);
 			return;
 		}
 	}
