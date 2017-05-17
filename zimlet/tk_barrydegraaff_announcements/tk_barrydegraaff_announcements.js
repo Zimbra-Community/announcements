@@ -43,7 +43,7 @@ AnnouncementsZimlet.prototype.init = function () {
       document.getElementById('zb__PORTAL__REFRESH_title').innerHTML = 'Add Announcement';
       document.getElementById('zb__PORTAL__REFRESH_title').title="";
                        
-      document.getElementById('AnnouncementPortal').innerHTML = document.getElementById('AnnouncementPortal').innerHTML + '<table><tr><td style="vertical-align:top"><div id="Announcements" style="padding-left:10px;width:760px; border:0px;"></div></td>'+
+      document.getElementById('AnnouncementPortal').innerHTML = '<a name="announcementTop"></a><table><tr><td style="vertical-align:top"><div id="PortalTopTiles"></div><div id="Announcements" style="padding-left:10px;width:760px; border:0px;"></div></td>'+
       '<td style="vertical-align:top">'+
       
       '<div id=\"feed1title\" class="feedtitle" style="background-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';border-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';color:'+zimletInstance._zimletContext.getConfig('color')+'">'+zimletInstance._zimletContext.getConfig('feed1title')+'</div><div id=\"feed1\"></div><br><br>'+
@@ -106,7 +106,7 @@ AnnouncementsZimlet.prototype.showContent = function (content)
       var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
       
       announcements.forEach(function(announcement) {
-         resultHTML = resultHTML + "<div class=\"announcementTitle\" style=\"background-color:"+zimletInstance._zimletContext.getConfig("backgroudcolor")+";border-color:"+zimletInstance._zimletContext.getConfig("backgroudcolor")+";color:"+zimletInstance._zimletContext.getConfig("color")+"\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.title)+"<div title=\"Show comments\" onclick=\"AnnouncementsZimlet.prototype.showComments("+announcement.entryId+")\" style=\"cursor:pointer;width:37px; height:19px; color:"+zimletInstance._zimletContext.getConfig("color")+"; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; float:right; background-image:url('"+zimletInstance.getResource(zimletInstance._zimletContext.getConfig('commentspng'))+"')\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.comments)+"</div></div><div class=\"announcementBody\">"+
+         resultHTML = resultHTML + "<div class=\"announcementTitle\" style=\"background-color:"+zimletInstance._zimletContext.getConfig("backgroudcolor")+";border-color:"+zimletInstance._zimletContext.getConfig("backgroudcolor")+";color:"+zimletInstance._zimletContext.getConfig("color")+"\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.title)+"<div title=\"Show comments\" class=\"disableOnRO\" onclick=\"AnnouncementsZimlet.prototype.showComments("+announcement.entryId+")\" style=\"cursor:pointer;width:37px; height:19px; color:"+zimletInstance._zimletContext.getConfig("color")+"; text-align:center; padding-top:2px;  background-repeat: no-repeat; overflow:hidden; float:right; background-image:url('"+zimletInstance.getResource(zimletInstance._zimletContext.getConfig('commentspng'))+"')\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.comments)+"</div></div><div class=\"announcementBody\">"+
          "<small class=\"annoucementMeta\">"+AnnouncementsZimlet.prototype.escapeHtml(announcement.createDate.substring(0,announcement.createDate.length-5))+" "+
          AnnouncementsZimlet.prototype.escapeHtml(announcement.userName)+"</small><br><br>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.content);
          
@@ -115,7 +115,7 @@ AnnouncementsZimlet.prototype.showContent = function (content)
             resultHTML = resultHTML + " <a href='"+AnnouncementsZimlet.prototype.escapeHtml(announcement.url)+"'>"+AnnouncementsZimlet.prototype.escapeHtml(announcement.url)+"</a>";
          }
          
-         resultHTML = resultHTML + "<div class=\"announcementFooter\"><a title=\"Add comments\" onclick=\"AnnouncementsZimlet.prototype.addAnnouceOrComment("+announcement.entryId+")\"><img src=\""+zimletInstance.getResource('plus.png')+"\"></a><a title=\"Scroll to top\" onclick=\"location.href='#announcementTop'\"><img src=\""+zimletInstance.getResource('top-arrow.png')+"\"></a></div></div><div id=\"commentsFor"+announcement.entryId+"\"></div><br>";
+         resultHTML = resultHTML + "<div class=\"announcementFooter\"><a title=\"Add comments\" class=\"disableOnRO\"  onclick=\"AnnouncementsZimlet.prototype.addAnnouceOrComment("+announcement.entryId+")\"><img src=\""+zimletInstance.getResource('plus.png')+"\"></a><a title=\"Scroll to top\" onclick=\"location.href='#announcementTop'\"><img src=\""+zimletInstance.getResource('top-arrow.png')+"\"></a></div></div><div id=\"commentsFor"+announcement.entryId+"\"></div><br>";
       });
       document.getElementById('Announcements').innerHTML = resultHTML;
       
