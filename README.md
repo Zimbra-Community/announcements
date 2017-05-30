@@ -30,8 +30,12 @@ Use the automated installer:
     chmod +rx /tmp/announcement-installer.sh
     /tmp/announcement-installer.sh
 
+    Enable for a COS:
     zmprov mc default zimbraFeaturePortalEnabled TRUE
     zmprov mc default zimbraPortalName tk_barrydegraaff_announcements
+
+    Or for a single user:
+    zmprov ma admin@myzimbra.com zimbraFeaturePortalEnabled TRUE
 
 Optional, configure your feeds and allow Zimbra to fetch them:
 
