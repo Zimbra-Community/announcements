@@ -52,7 +52,7 @@ AnnouncementsZimlet.prototype.init = function () {
       '<div id=\"feed2\"></div><br><br>'+
       
       '<div id=\"feed3title\" class="feedtitle" style="background-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';border-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';color:'+zimletInstance._zimletContext.getConfig('color')+'">'+zimletInstance._zimletContext.getConfig('feed3title')+'</div>'+      
-      '<div id=\"feed3\"></div></td></tr></table>'; 
+      '<div id=\"feed3\"></div></td></tr></table>'+
 
       '<div id=\"feed4title\" class="feedtitle" style="background-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';border-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';color:'+zimletInstance._zimletContext.getConfig('color')+'">'+zimletInstance._zimletContext.getConfig('feed4title')+'</div>'+      
       '<div id=\"feed4\"></div></td></tr></table>'; 
