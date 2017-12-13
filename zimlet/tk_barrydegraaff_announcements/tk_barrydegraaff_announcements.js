@@ -53,6 +53,9 @@ AnnouncementsZimlet.prototype.init = function () {
       
       '<div id=\"feed3title\" class="feedtitle" style="background-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';border-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';color:'+zimletInstance._zimletContext.getConfig('color')+'">'+zimletInstance._zimletContext.getConfig('feed3title')+'</div>'+      
       '<div id=\"feed3\"></div></td></tr></table>'; 
+
+      '<div id=\"feed4title\" class="feedtitle" style="background-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';border-color:'+zimletInstance._zimletContext.getConfig('backgroudcolor')+';color:'+zimletInstance._zimletContext.getConfig('color')+'">'+zimletInstance._zimletContext.getConfig('feed4title')+'</div>'+      
+      '<div id=\"feed4\"></div></td></tr></table>'; 
       
       if(!zimletInstance._zimletContext.getConfig('feed1title'))
       {
@@ -69,7 +72,12 @@ AnnouncementsZimlet.prototype.init = function () {
          document.getElementById('feed3title').style.display = 'none';
          document.getElementById('feed3').style.display = 'none';
       }      
-      
+      if(!zimletInstance._zimletContext.getConfig('feed4title'))
+      {
+         document.getElementById('feed4title').style.display = 'none';
+         document.getElementById('feed4').style.display = 'none';
+      }  
+            
       var soapDoc = AjxSoapDoc.create("Announcements", "urn:Announcements", null);
       soapDoc.getMethod().setAttribute("action", "getAnnouncements");
       var params = {
@@ -151,6 +159,12 @@ AnnouncementsZimlet.prototype.showContent = function (content)
       var postCallback = new AjxCallback(this, AnnouncementsZimlet.prototype._displayRSSResultsDialog, ["feed3"]);
 	   AnnouncementsZimlet.prototype._invoke(postCallback, zimletInstance._zimletContext.getConfig('feed3url'));
    }
+
+	if(zimletInstance._zimletContext.getConfig('feed4url'))
+   {
+      var postCallback = new AjxCallback(this, AnnouncementsZimlet.prototype._displayRSSResultsDialog, ["feed4"]);
+	   AnnouncementsZimlet.prototype._invoke(postCallback, zimletInstance._zimletContext.getConfig('feed4url'));
+   }   
 };
 
 AnnouncementsZimlet.prototype.showComments = function (entryId)

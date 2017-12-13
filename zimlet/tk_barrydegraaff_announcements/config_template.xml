@@ -28,6 +28,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/.
         <property name="feed2url">https://nextcloud.com/blogfeed/</property>
         <property name="feed3title"></property>
         <property name="feed3url"></property>
+        <property name="feed4title"></property>
+        <property name="feed4url"></property>
         <property name="commentspng">comment.png</property>
     </global>
 </zimletConfig>
