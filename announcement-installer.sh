@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2016-2017  Barry de Graaff
+# Copyright (C) 2016-2018  Barry de Graaff
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,6 +24,13 @@ if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
    exit 1
 fi
+
+echo ""
+echo "This script will install the Announcements Portal"
+echo "If you already installed the Announcements Portal before, re-running the script will DROP THE DATABASE"
+echo "Run a mysqldump in case you want to keep your data! (any key to continue)"
+
+read DUMMY;
 
 mkdir -p /opt/zimbra/lib/ext/Announcements
 wget --no-cache https://github.com/Zimbra-Community/announcements/raw/master/extension/Announcements/out/artifacts/Announcements_jar/Announcements.jar -O /opt/zimbra/lib/ext/Announcements/Announcements.jar
