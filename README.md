@@ -18,10 +18,10 @@ add new announcements and comment on them. Spread the word in your organization!
 
 
 ### Install prerequisites
-  - Zimbra 8.7 and above
+  - Zimbra 8.8 and above
   
 Support for 8.6 at own risk. Place a [mariadb-java-client-1.1.8.jar](https://github.com/Zimbra-Community/announcements/raw/master/extra/mariadb-java-client-1.1.8.jar) in Jetty Lib folder:
-/opt/zimbra/jetty-distribution-9.1.5.v20140505/common/lib/mariadb-java-client-1.1.8.jar   (remove this file when upgrading to 8.7)
+/opt/zimbra/jetty-distribution-9.1.5.v20140505/common/lib/mariadb-java-client-1.1.8.jar   (remove this file when upgrading to 8.7). Also make sure to configure your own MySQL backup on Zimbra 8.6, see: /etc/cron.daily/announcements-backup
 
 ### Installing
 Use the automated installer:
