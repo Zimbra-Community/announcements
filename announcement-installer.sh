@@ -26,10 +26,14 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 echo ""
+echo ""
 echo "This script will install the Announcements Portal"
-echo "If you already installed the Announcements Portal before, re-running the script will DROP THE DATABASE"
-echo "Run a mysqldump in case you want to keep your data! (any key to continue)"
-
+echo "IMPORTANT: "
+echo "If you already installed the Announcements Portal before, "
+echo "re-running this script will remove existing Announcements data "
+echo "(any key to continue or CTRL+C to abort)"
+echo ""
+echo ""
 read DUMMY;
 
 mkdir -p /opt/zimbra/lib/ext/Announcements
@@ -75,7 +79,14 @@ echo "Install Portal Manifest"
 mkdir -p /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements
 wget --no-cache https://raw.githubusercontent.com/Zimbra-Community/announcements/master/manifest.xml -O /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements/manifest.xml
 
-
+echo "Install daily backup via /etc/cron.daily in /announcements-backup"
+cat <<EOF > /etc/cron.daily/announcements-backup
+#!/bin/bash
+mkdir -p /announcements-backup
+rm /announcements-backup/announcements-`date +%w`.sql
+/opt/zimbra/common/bin/mysqldump -h 127.0.0.1 -P7306 -u'ad-announcements_db' -p'${ANNOUNCEMENTS_PWD}' --add-drop-table announcements_db > /announcements-backup/announcements-`date +%w`.sql
+EOF
+chmod +rx /etc/cron.daily/announcements-backup
 
 echo "--------------------------------------------------------------------------------------------------------------"
 echo "You still need to restart some services to load the changes:"
@@ -88,3 +99,6 @@ echo "zmprov mc default +zimbraProxyAllowedDomains zimbra.com"
 echo "zmprov mc default +zimbraProxyAllowedDomains nextcloud.com"
 echo "See: /opt/zimbra/zimlets-deployed/_dev/tk_barrydegraaff_announcements/config_template.xml"
 echo "Alternatively you can enable it per user: zmprov ma admin@myzimbra.com zimbraFeaturePortalEnabled TRUE"
+echo ""
+echo "WARNING: Announcements database is dropped on Zimbra upgrades!"
+echo "See: /etc/cron.daily/announcements-backup"
