@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `AnnouncementsEntry` (
   `expirationDate` datetime DEFAULT NULL,
   `priority` int(11) DEFAULT NULL,
   `alert` tinyint(4) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 ALTER TABLE `AnnouncementsEntry`
  ADD PRIMARY KEY (`entryId`), ADD KEY `IX_A6EF0B81` (`classNameId`,`classPK`), ADD KEY `IX_14F06A6B` (`classNameId`,`classPK`,`alert`), ADD KEY `IX_D49C2E66` (`userId`), ADD KEY `IX_1AFBDE08` (`uuid_`), ADD KEY `IX_F2949120` (`uuid_`,`companyId`);
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `AnnouncementsComments` (
   `userName` varchar(75) DEFAULT NULL,
   `createDate` datetime DEFAULT NULL,
   `content` longtext
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 ALTER TABLE `AnnouncementsComments` ADD PRIMARY KEY (`id`);
 ALTER TABLE `AnnouncementsComments` MODIFY `id` bigint(20) AUTO_INCREMENT;
