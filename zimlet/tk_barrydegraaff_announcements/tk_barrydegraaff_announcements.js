@@ -434,7 +434,7 @@ function(postCallback, reponse) {
 			counter++;
 		}catch(e) {//print some exception
 			console.log(e);
-			return;
+			//return;
 		}
 	}
 
