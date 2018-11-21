@@ -20,19 +20,27 @@ package tk.barrydegraaff.announcements;
 
 import java.util.Map;
 
-import com.zimbra.common.localconfig.LC;
 import com.zimbra.common.service.ServiceException;
 import com.zimbra.common.soap.Element;
-import com.zimbra.common.soap.SoapParseException;
+import com.zimbra.cs.account.Provisioning;
 import com.zimbra.soap.DocumentHandler;
 import com.zimbra.soap.ZimbraSoapContext;
 import com.zimbra.cs.account.Account;
 
 import java.sql.*;
 import java.io.*;
-import java.text.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import com.zimbra.common.mime.MimeConstants;
+import javax.mail.internet.MimeMessage;
+import com.zimbra.common.mime.shim.JavaMailInternetAddress;
+import com.zimbra.cs.mailbox.MailSender;
+import com.zimbra.cs.mailbox.Mailbox;
+import com.zimbra.cs.mailbox.MailboxManager;
+import com.zimbra.cs.mime.Mime;
+import com.zimbra.cs.util.JMSession;
 
 public class Announcements extends DocumentHandler {
     final String db_connect_string = this.getDbConnectionString();
@@ -156,6 +164,28 @@ public class Announcements extends DocumentHandler {
                     stmt.setString(2, userName);
                     stmt.setString(3, this.uriDecode(request.getAttribute("content")));
                     stmt.executeQuery();
+
+                    try {
+                        stmt = connection.prepareStatement("SELECT `userName`, `title` FROM AnnouncementsEntry WHERE `entryId` = ?");
+                        stmt.setString(1, this.uriDecode(request.getAttribute("entryId")));
+                        ResultSet announcements = null;
+                        announcements = stmt.executeQuery();
+
+                        while (announcements.next()) {
+                            String userNameFromDB = announcements.getString("userName");
+                            Pattern p = Pattern.compile(".*&lt;(.*)&gt;");
+                            Matcher m = p.matcher(userNameFromDB);
+                            if (m.find()) {
+                               Account AnnouncementUser = Provisioning.getInstance().getAccountByName(m.group(1));
+                                sendNotification(AnnouncementUser, "New comment on your post "+ announcements.getString("title"), this.uriDecode(request.getAttribute("content")) + "<br>By: "+userName);
+                            }
+
+                        }
+                    } catch(Exception e)
+                    {
+                        System.out.print("Cannot send notification for announcement.");
+                        e.printStackTrace();
+                    }
                 }
                 else {
                     PreparedStatement stmt = connection.prepareStatement("INSERT INTO AnnouncementsEntry VALUES (NULL, ?, NOW(),?,?)");
@@ -195,5 +225,29 @@ public class Announcements extends DocumentHandler {
         }
         return true;
     }
+
+    private void sendNotification(Account account, String subject, String content) {
+        try {
+            MimeMessage mm = new Mime.FixedMimeMessage(JMSession.getSmtpSession(account));
+
+            String to = account.getName();
+
+            mm.setRecipient(javax.mail.Message.RecipientType.TO, new JavaMailInternetAddress(to));
+            //mm.setText("To join the Meeting Online go to:\\r\\n[meetinglink]\\r\\n\\r\\nYou can use the following password:\\r\\n[password]\\r\\n", MimeConstants.P_CHARSET_UTF8);
+            mm.setContent(content,MimeConstants.CT_TEXT_HTML);
+            mm.setSubject(subject);
+            mm.saveChanges();
+
+            Mailbox mbox = MailboxManager.getInstance().getMailboxByAccount(account);
+            MailSender mailSender = mbox.getMailSender();
+
+            mailSender.setSaveToSent(false);
+            mailSender.sendMimeMessage(null, mbox, mm);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
