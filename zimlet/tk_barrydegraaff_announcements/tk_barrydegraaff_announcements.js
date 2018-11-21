@@ -280,10 +280,11 @@ AnnouncementsZimlet.prototype.addAnnouceOrCommentCallback = function (title, add
 AnnouncementsZimlet.prototype.addAnnouceOrComment = function(entryId) {
    var addingComment = !isNaN(entryId);
    
-   var addAnnouceOrComment = new DwtDialog({parent: appCtxt.getShell(), disposeOnPopDown: true});
-   var composite = new DwtComposite({ parent: addAnnouceOrComment });
+   var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
+   zimletInstance.addAnnouceOrComment = new DwtDialog({parent: appCtxt.getShell(), disposeOnPopDown: true});
+   var composite = new DwtComposite({ parent: zimletInstance.addAnnouceOrComment });
 
-   addAnnouceOrComment.setView(composite);
+   zimletInstance.addAnnouceOrComment.setView(composite);
 
    if(!addingComment)
    {
@@ -294,10 +295,10 @@ AnnouncementsZimlet.prototype.addAnnouceOrComment = function(entryId) {
         id: 'announceTitle'
       });
    }
-   addAnnouceOrComment.dwtext = new ZmHtmlEditor({parent: composite});
-   addAnnouceOrComment.dwtext.setMode("text/html");
-   addAnnouceOrComment.dwtext.setSize(600,400); 
-   addAnnouceOrComment.dwtext.setContent("");
+   zimletInstance.addAnnouceOrComment.dwtext = new ZmHtmlEditor({parent: composite});
+   zimletInstance.addAnnouceOrComment.dwtext.setMode("text/html");
+   zimletInstance.addAnnouceOrComment.dwtext.setSize(600,400); 
+   zimletInstance.addAnnouceOrComment.dwtext.setContent("");   
    
    if(!addingComment)
    {
@@ -311,33 +312,33 @@ AnnouncementsZimlet.prototype.addAnnouceOrComment = function(entryId) {
    composite.setSize(610,500); 
    if(!addingComment)
    {
-      addAnnouceOrComment.setTitle('New Announcement');
+      zimletInstance.addAnnouceOrComment.setTitle('New Announcement');
    }
    else
    {   
-      addAnnouceOrComment.setTitle('New Comment');
+      zimletInstance.addAnnouceOrComment.setTitle('New Comment');
    }
 
-   addAnnouceOrComment.setButtonListener(DwtDialog.OK_BUTTON, new AjxListener(this, this.addAnnouceOrCommentCallback, [title, addAnnouceOrComment, entryId]));
-   addAnnouceOrComment.addEnterListener(new AjxListener(this, this.addAnnouceOrCommentCallback, [title, addAnnouceOrComment, entryId]));
+   zimletInstance.addAnnouceOrComment.setButtonListener(DwtDialog.OK_BUTTON, new AjxListener(this, this.addAnnouceOrCommentCallback, [title, zimletInstance.addAnnouceOrComment, entryId]));
+   zimletInstance.addAnnouceOrComment.addEnterListener(new AjxListener(this, this.addAnnouceOrCommentCallback, [title, zimletInstance.addAnnouceOrComment, entryId]));
 
    if(!addingComment)
    {
-      addAnnouceOrComment._tabGroup.addMemberBefore(addAnnouceOrComment.dwtext,addAnnouceOrComment._tabGroup.getFirstMember());
-      addAnnouceOrComment._tabGroup.addMemberBefore(title, addAnnouceOrComment.dwtext);
-      addAnnouceOrComment._tabGroup.setFocusMember(title);  
+      zimletInstance.addAnnouceOrComment._tabGroup.addMemberBefore(zimletInstance.addAnnouceOrComment.dwtext,zimletInstance.addAnnouceOrComment._tabGroup.getFirstMember());
+      zimletInstance.addAnnouceOrComment._tabGroup.addMemberBefore(title, zimletInstance.addAnnouceOrComment.dwtext);
+      zimletInstance.addAnnouceOrComment._tabGroup.setFocusMember(title);  
 
    }
    else
    {   
-      addAnnouceOrComment._tabGroup.addMemberBefore(addAnnouceOrComment.dwtext,addAnnouceOrComment._tabGroup.getFirstMember());
-      addAnnouceOrComment._tabGroup.setFocusMember(addAnnouceOrComment.dwtext);  
+      zimletInstance.addAnnouceOrComment._tabGroup.addMemberBefore(zimletInstance.addAnnouceOrComment.dwtext,zimletInstance.addAnnouceOrComment._tabGroup.getFirstMember());
+      zimletInstance.addAnnouceOrComment._tabGroup.setFocusMember(zimletInstance.addAnnouceOrComment.dwtext);  
    }   
-   addAnnouceOrComment.popup();
+   zimletInstance.addAnnouceOrComment.popup();
 
    if(!addingComment)
    {
-      document.getElementById('announceFile').innerHTML = '<b>Attachments</b><br><input type="file" multiple name="attachments" id="announceAttach">';
+      document.getElementById('announceFile').innerHTML = '<b>Insert inline image</b><br><input accept="image/*" id="AnnouceEditorimageFile" type="file" onchange="AnnouncementsZimlet.ResizeImage();"><canvas style="display:none" id="AnnouncementsZimletTemporaryCanvase"><img style="display:none" id="AnnouncementsZimletTemporaryImage">';
    }   
 };
 
@@ -457,3 +458,57 @@ function() {
 
 	return html;
 };  
+
+AnnouncementsZimlet.ResizeImage = function() {
+    var filesToUpload = document.getElementById('AnnouceEditorimageFile').files;
+    var file = filesToUpload[0];
+
+    // Create a file reader
+    var reader = new FileReader();
+    // Set the image once loaded into file reader
+    reader.onload = function(e) {
+           var img = document.getElementById("AnnouncementsZimletTemporaryImage");
+            img.src = e.target.result;
+            img.onload = function () {
+               //var canvas = document.createElement("canvas");
+               var canvas = document.getElementById("AnnouncementsZimletTemporaryCanvase");
+               var ctx = canvas.getContext("2d");
+               ctx.drawImage(img, 0, 0);
+   
+               var MAX_WIDTH = 400;
+               var MAX_HEIGHT = 400;
+               var width = img.width;
+               var height = img.height;
+   
+               if (width > height) {
+                   if (width > MAX_WIDTH) {
+                       height *= MAX_WIDTH / width;
+                       width = MAX_WIDTH;
+                   }
+               } else {
+                   if (height > MAX_HEIGHT) {
+                       width *= MAX_HEIGHT / height;
+                       height = MAX_HEIGHT;
+                   }
+               }
+               canvas.width = width;
+               canvas.height = height;
+               var ctx = canvas.getContext("2d");
+               ctx.drawImage(img, 0, 0, width, height);
+   
+               var dataurl = canvas.toDataURL('image/jpeg', 0.8);
+               if(dataurl.length > 100 && dataurl.length < 50000)
+               {
+                  var zimletInstance = appCtxt._zimletMgr.getZimletByName('tk_barrydegraaff_announcements').handlerObject;
+                  var content = zimletInstance.addAnnouceOrComment.dwtext.getContent();
+                  zimletInstance.addAnnouceOrComment.dwtext.setContent(content + "<img src='"+dataurl+"'>");   
+               }
+               else
+               {
+                  AnnouncementsZimlet.prototype.status('Inserting this image failed.',ZmStatusView.LEVEL_WARNING)
+               }
+            }
+        }
+        // Load files into file reader
+    reader.readAsDataURL(file);
+}

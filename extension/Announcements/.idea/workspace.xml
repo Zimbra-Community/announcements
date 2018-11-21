@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="925555f6-d100-4a22-b99a-155d7c287cb3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../AnnouncementsEntry.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../AnnouncementsEntry.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java" afterDir="false" />
-    </list>
+    <list default="true" id="925555f6-d100-4a22-b99a-155d7c287cb3" name="Default" comment="" />
     <ignored path="Announcements.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -46,7 +42,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
+            <state relative-caret-position="2730">
               <caret line="179" column="189" selection-start-line="179" selection-start-column="189" selection-end-line="179" selection-end-column="189" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -104,7 +100,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542792391014" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542797298102" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
@@ -335,7 +331,7 @@
     <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/AnnouncementsService.java" />
     <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
+        <state relative-caret-position="2730">
           <caret line="179" column="189" selection-start-line="179" selection-start-column="189" selection-end-line="179" selection-end-column="189" />
           <folding>
             <element signature="imports" expanded="true" />
