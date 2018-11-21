@@ -163,3 +163,10 @@ padding:10px;
 {
 display:none;
 }
+
+@font-face {
+    font-family: 'bitstream_vera_sansroman';
+    src: url('Vera-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
