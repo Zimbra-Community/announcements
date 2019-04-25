@@ -109,15 +109,38 @@ padding:10px;
 
 .announcementTitle
 {
-border: 1px solid #da2128;
 border-top-left-radius:5px;
 border-top-right-radius:5px;
 width:450px;
-padding:10px;
 background-color:#da2128;
+}
+
+.announcementTitleText
+{
+padding:10px;
 color:white;
 font-weight:700;
 font-size:16px;
+}
+
+.announcementTitleCommCount
+{
+padding-top:10px;
+padding-right:10px;
+color:white;
+font-weight:700;
+font-size:16px;
+
+font-family:bitstream_vera_sansroman;
+font-size:12px;cursor:pointer;
+width:37px; 
+height:19px;
+text-align:center; 
+
+background-repeat: no-repeat; 
+background-position-y: 9px;
+overflow:hidden; 
+float:right;
 }
 
 .announcementFooter
