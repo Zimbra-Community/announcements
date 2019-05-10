@@ -18,8 +18,8 @@
     <session id="-864592333">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.0" value="2" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -42,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2730">
-              <caret line="179" column="189" selection-start-line="179" selection-start-column="189" selection-end-line="179" selection-end-column="189" />
+            <state relative-caret-position="840">
+              <caret line="97" column="56" lean-forward="true" selection-start-line="94" selection-start-column="16" selection-end-line="97" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,9 +94,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -245,7 +245,7 @@
     <frame x="0" y="0" width="1920" height="1048" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.07058824" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.071123" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Nl-Palette" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -331,8 +331,8 @@
     <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/AnnouncementsService.java" />
     <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2730">
-          <caret line="179" column="189" selection-start-line="179" selection-start-column="189" selection-end-line="179" selection-end-column="189" />
+        <state relative-caret-position="840">
+          <caret line="97" column="56" lean-forward="true" selection-start-line="94" selection-start-column="16" selection-end-line="97" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
