@@ -79,6 +79,10 @@ echo "Install Portal Manifest"
 mkdir -p /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements
 wget --no-cache https://raw.githubusercontent.com/Zimbra-Community/announcements/master/manifest.xml -O /opt/zimbra/jetty/webapps/zimbra/portals/tk_barrydegraaff_announcements/manifest.xml
 
+echo "Install 8.8.15 Proxy extension"
+mkdir -p /opt/zimbra/lib/ext/proxy/
+wget --no-cache https://github.com/Zimbra-Community/proxy/raw/master/extension/out/artifacts/extension_jar/extension.jar -O /opt/zimbra/lib/ext/proxy/extension.jar
+
 echo "Install daily backup via /etc/cron.daily in /announcements-backup"
 cat <<EOF > /etc/cron.daily/announcements-backup
 #!/bin/bash

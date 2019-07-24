@@ -400,7 +400,7 @@ AnnouncementsZimlet.prototype.addAnnouceOrCommentCallback = function (title, add
 
 AnnouncementsZimlet.prototype._invoke =
 function(postCallback, url) {
-	var feedUrl = ZmZimletBase.PROXY + AjxStringUtil.urlComponentEncode(url);
+	var feedUrl = "/service/extension/proxy/?target=" + url;
 	AjxRpc.invoke(null, feedUrl, null, new AjxCallback(this, AnnouncementsZimlet.prototype._reponseHandler, postCallback), true);
 };
 

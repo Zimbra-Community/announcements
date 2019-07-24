@@ -18,6 +18,7 @@
     <session id="-864592333">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.0" value="2" />
           <entry key="project.opened" value="2" />
         </counts>
@@ -42,7 +43,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
+            <state relative-caret-position="238">
               <caret line="97" column="56" lean-forward="true" selection-start-line="94" selection-start-column="16" selection-end-line="97" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -331,7 +332,7 @@
     <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/AnnouncementsService.java" />
     <entry file="file://$PROJECT_DIR$/src/tk/barrydegraaff/announcements/Announcements.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
+        <state relative-caret-position="238">
           <caret line="97" column="56" lean-forward="true" selection-start-line="94" selection-start-column="16" selection-end-line="97" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
