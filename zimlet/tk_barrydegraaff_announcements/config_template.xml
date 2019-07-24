@@ -22,10 +22,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/.
     <global>
         <property name="color">white</property>
         <property name="backgroudcolor">#007cc3</property>
-        <property name="feed1title">Zimbra Blog</property>
+        <property name="feed1title">Zimbra news</property>
         <property name="feed1url">https://blog.zimbra.com/feed/</property>
-        <property name="feed2title">Nextcloud News</property>
-        <property name="feed2url">https://nextcloud.com/blogfeed/</property>
+        <property name="feed2title">Nextcloud news</property>
+        <property name="feed2url">https://nextcloud.com/blog/static-feed/</property>
         <property name="feed3title"></property>
         <property name="feed3url"></property>
         <property name="feed4title"></property>
