@@ -72,7 +72,7 @@ wget --no-cache https://raw.githubusercontent.com/Zimbra-Community/announcements
 /opt/zimbra/bin/mysql announcements_db < /root/AnnouncementsEntry.sql
 
 echo "Installing Zimlet"
-wget --no-cache https://github.com/Zimbra-Community/announcements/releases/download/0.0.2/tk_barrydegraaff_announcements.zip -O /tmp/tk_barrydegraaff_announcements.zip
+wget --no-cache https://github.com/Zimbra-Community/announcements/releases/download/0.0.3/tk_barrydegraaff_announcements.zip -O /tmp/tk_barrydegraaff_announcements.zip
 su - zimbra -c "zmzimletctl deploy /tmp/tk_barrydegraaff_announcements.zip"
 
 echo "Install Portal Manifest"
