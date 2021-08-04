@@ -1,5 +1,5 @@
 /*
- Copyright (C) 2016  Barry de Graaff
+ Copyright (C) 2016-2021  Barry de Graaff
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -338,7 +338,7 @@ AnnouncementsZimlet.prototype.addAnnouceOrComment = function(entryId) {
 
    if(!addingComment)
    {
-      document.getElementById('announceFile').innerHTML = '<b>Insert inline image</b><br><input accept="image/*" id="AnnouceEditorimageFile" type="file" onchange="AnnouncementsZimlet.ResizeImage();"><canvas style="display:none" id="AnnouncementsZimletTemporaryCanvase"><img style="display:none" id="AnnouncementsZimletTemporaryImage">';
+      document.getElementById('announceFile').innerHTML = '<b>Insert inline image</b><br><input accept="image/*" id="AnnouceEditorimageFile" type="file" onchange="AnnouncementsZimlet.prototype.ResizeImage();"><canvas style="display:none" id="AnnouncementsZimletTemporaryCanvase"><img style="display:none" id="AnnouncementsZimletTemporaryImage">';
    }   
 };
 
@@ -459,7 +459,7 @@ function() {
 	return html;
 };  
 
-AnnouncementsZimlet.ResizeImage = function() {
+AnnouncementsZimlet.prototype.ResizeImage = function() {
     var filesToUpload = document.getElementById('AnnouceEditorimageFile').files;
     var file = filesToUpload[0];
 

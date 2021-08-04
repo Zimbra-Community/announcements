@@ -18,6 +18,7 @@ add new announcements and comment on them. Spread the word in your organization!
 
 
 ### Install prerequisites
+  - Zimbra 9 (Classic UI)
   - Zimbra 8.8.15
   
 
@@ -28,14 +29,14 @@ Use the automated installer:
     chmod +rx /tmp/announcement-installer.sh
     /tmp/announcement-installer.sh
 
-    Enable for a COS:
+    Enable for a COS (as user Zimbra):
     zmprov mc default zimbraFeaturePortalEnabled TRUE
     zmprov mc default zimbraPortalName tk_barrydegraaff_announcements
 
-    Or for a single user:
+    Or for a single user (as user Zimbra):
     zmprov ma admin@myzimbra.com zimbraFeaturePortalEnabled TRUE
 
-Optional, configure your feeds and allow Zimbra to fetch them:
+Optional, configure your feeds and allow Zimbra to fetch them (as user Zimbra):
 
     zmprov mc default +zimbraProxyAllowedDomains zimbra.com
     zmprov mc default +zimbraProxyAllowedDomains nextcloud.com
