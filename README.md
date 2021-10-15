@@ -1,10 +1,6 @@
 Announcements Portal
 ==========
 
-If you find Annoucements Portal useful and want to support its continued development, you can make donations via:
-- PayPal: info@barrydegraaff.tk
-- Bank transfer: IBAN NL55ABNA0623226413 ; BIC ABNANL2A
-
 This portal shows a list of announcements and RSS feeds in Zimbra as the first thing people see after login. Also People can
 add new announcements and comment on them. Spread the word in your organization!
 
